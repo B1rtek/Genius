@@ -296,7 +296,7 @@ int main(int argc, char **argv) {
         if (yesOrNo()) {
             unsigned long long current = 0;
             do {
-                for (unsigned long long j = current; j < min(current + 10, dataWords.size()); j++) {
+                for (int j = current; j < min(int(current + 10), int(dataWords.size())); j++) {
                     cout << dataWords[j] << endl;
                 }
                 cout << "Display more? [Y/n]";
