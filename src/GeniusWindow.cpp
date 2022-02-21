@@ -18,7 +18,7 @@ GeniusWindow::GeniusWindow(QWidget *parent) {
 /**
  * @brief Links the buttons and other UI elements to their callback functions
  */
-void GeniusWindow::linkButtons() {
+void GeniusWindow::linkButtons() const {
     this->ui.sliderWordLength->setValue(5);
     connect(this->ui.sliderWordLength, &QSlider::valueChanged, this, &GeniusWindow::wordLengthChange);
     connect(this->ui.buttonConfirm, &QPushButton::clicked, this, &GeniusWindow::confirmButton);

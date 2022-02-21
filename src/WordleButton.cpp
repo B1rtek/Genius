@@ -4,7 +4,7 @@
  * @brief Creates the WordleButton
  * @param parent Qt5 stuff idk
  */
-WordleButton::WordleButton(QWidget *parent) : QPushButton(parent) {
+WordleButton::WordleButton(QWidget *parent) : QPushButton(parent) { // NOLINT(cppcoreguidelines-pro-type-member-init)
     QSizePolicy policy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     policy.setHeightForWidth(true);
     this->setSizePolicy(policy);
@@ -79,7 +79,7 @@ void WordleButton::setLetter(char newLetter) {
 /**
  * @return The letter on the button
  */
-char WordleButton::getLetter() {
+char WordleButton::getLetter() const {
     return this->letter;
 }
 

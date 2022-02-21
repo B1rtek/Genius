@@ -26,7 +26,7 @@ public:
 
     void setLetter(char newLetter);
 
-    char getLetter();
+    char getLetter() const;
 
     char getResultLetter();
 

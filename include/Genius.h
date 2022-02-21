@@ -29,25 +29,25 @@ class Genius {
 
     void findStarters();
 
-    std::string getConfirmed(std::string input);
+    [[nodiscard]] std::string getConfirmed(std::string input) const;
 
-    std::string mergeConfirmed(std::string confirmed, std::string newConfirmed);
+    [[nodiscard]] std::string mergeConfirmed(std::string currentConfirmed, std::string newConfirmed) const;
 
-    void addNotHere(std::vector<std::set<char>> &currentNotHere, std::string input);
+    void addNotHere(std::vector<std::set<char>> &currentNotHere, std::string input) const;
 
-    void addInWord(std::set<char> &inWord, std::string input);
+    void addInWord(std::set<char> &inWord, std::string input) const;
 
-    void addWrong(std::set<char> &wrong, std::string input, std::string yourWord);
+    void addWrong(std::set<char> &wrong, std::string input, std::string yourWord) const;
 
-    void fixWrong(std::set<char> &wrong, std::set<char> inWord);
+    static void fixWrong(std::set<char> &wrong, const std::set<char>& inWord);
 
-    std::vector<std::string>
-    findMatching(std::vector<std::string> allWords, std::string currentConfirmed, std::set<char> currentInWord,
-                 std::set<char> currentWrong,
-                 std::vector<std::set<char>> currentNotHere);
+    [[nodiscard]] std::vector<std::string>
+    findMatching(std::vector<std::string> allWords, std::string currentConfirmed, const std::set<char>& currentInWord,
+                 const std::set<char>& currentWrong,
+                 std::vector<std::set<char>> currentNotHere) const;
 
-    std::vector<std::string>
-    findDataWords(std::vector<std::string> allWords, std::set<char> currentInWord, std::set<char> currentWrong);
+    [[nodiscard]] std::vector<std::string>
+    findDataWords(const std::vector<std::string>& allWords, const std::set<char>& currentInWord, const std::set<char>& currentWrong) const;
 
 public:
     Genius();

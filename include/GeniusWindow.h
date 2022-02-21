@@ -1,5 +1,5 @@
-#ifndef BATTLESHIP_CPP_BATTLESHIPGUI_H
-#define BATTLESHIP_CPP_BATTLESHIPGUI_H
+#ifndef GENIUS_GENIUSWINDOW_H
+#define GENIUS_GENIUSWINDOW_H
 
 #include <QtWidgets/QMainWindow>
 #include "ui_genius.h"
@@ -10,11 +10,11 @@
  * @brief Class operating the game in the GUI version
  */
 class GeniusWindow : public QMainWindow {
-    Ui_Genius ui;
+    Ui_Genius ui{};
     Genius genius;
     WordleWord wordDisplay;
 
-    void linkButtons();
+    void linkButtons() const;
 
     void wordLengthChange();
 
@@ -36,4 +36,4 @@ public:
     void closeEvent(QCloseEvent *event) override;
 };
 
-#endif //BATTLESHIP_CPP_BATTLESHIPGUI_H
+#endif //GENIUS_GENIUSWINDOW_H

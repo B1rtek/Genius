@@ -2,6 +2,7 @@
 #include <ctime>
 #include <algorithm>
 #include <random>
+#include <utility>
 #include "Genius.h"
 
 /**
@@ -167,7 +168,7 @@ void Genius::findStarters() {
  * @param input result of entering the word into Wordle
  * @return string containing just the confirmed letters
  */
-std::string Genius::getConfirmed(std::string input) {
+std::string Genius::getConfirmed(std::string input) const {
     std::string output;
     for (int i = 0; i < this->wordSize; i++) {
         output += ' ';
@@ -181,18 +182,18 @@ std::string Genius::getConfirmed(std::string input) {
 }
 
 /**
- * @brief Merges the new and old confirmed letters strings
- * @param confirmed current confirmed letters string
- * @param newConfirmed new confirmed letters string, created with getConfirmed()
- * @return confirmed letters string merged from these two
+ * @brief Merges the new and old currentConfirmed letters strings
+ * @param currentConfirmed current currentConfirmed letters string
+ * @param newConfirmed new currentConfirmed letters string, created with getConfirmed()
+ * @return currentConfirmed letters string merged from these two
  */
-std::string Genius::mergeConfirmed(std::string confirmed, std::string newConfirmed) {
+std::string Genius::mergeConfirmed(std::string currentConfirmed, std::string newConfirmed) const {
     for (int i = 0; i < this->wordSize; i++) {
-        if (confirmed[i] == ' ') {
-            confirmed[i] = newConfirmed[i];
+        if (currentConfirmed[i] == ' ') {
+            currentConfirmed[i] = newConfirmed[i];
         }
     }
-    return confirmed;
+    return currentConfirmed;
 }
 
 /**
@@ -204,7 +205,7 @@ std::string Genius::mergeConfirmed(std::string confirmed, std::string newConfirm
  * There exists a notHere set for all letters in the word, knowing that a certain letter can't be at the certain
  * position helps filtering out matching words
  */
-void Genius::addNotHere(std::vector<std::set<char>> &currentNotHere, std::string input) {
+void Genius::addNotHere(std::vector<std::set<char>> &currentNotHere, std::string input) const {
     for (int i = 0; i < this->wordSize; i++) {
         if (input[i] >= 'a' && input[i] <= 'z') {
             currentNotHere[i].insert(input[i]);
@@ -217,7 +218,7 @@ void Genius::addNotHere(std::vector<std::set<char>> &currentNotHere, std::string
  * @param inWord set to add new letters to
  * @param input result of entering the word into Wordle
  */
-void Genius::addInWord(std::set<char> &inWordSet, std::string input) {
+void Genius::addInWord(std::set<char> &inWordSet, std::string input) const {
     for (int i = 0; i < this->wordSize; i++) {
         if (input[i] >= 'a' && input[i] <= 'z') {
             inWordSet.insert(input[i]);
@@ -234,7 +235,7 @@ void Genius::addInWord(std::set<char> &inWordSet, std::string input) {
  * @param input result of entering the word into Wordle
  * @param yourWord the word entered into Wordle
  */
-void Genius::addWrong(std::set<char> &wrongSet, std::string input, std::string yourWord) {
+void Genius::addWrong(std::set<char> &wrongSet, std::string input, std::string yourWord) const {
     for (int i = 0; i < this->wordSize; i++) {
         if (input[i] == '-') {
             wrongSet.insert(yourWord[i]);
@@ -247,7 +248,7 @@ void Genius::addWrong(std::set<char> &wrongSet, std::string input, std::string y
  * @param wrong set of wrong letters
  * @param inWord set of letters in the word
  */
-void Genius::fixWrong(std::set<char> &wrongSet, std::set<char> inWordSet) {
+void Genius::fixWrong(std::set<char> &wrongSet, const std::set<char>& inWordSet) {
     for (auto &letter: inWordSet) {
         if (wrongSet.count(letter)) {
             wrongSet.erase(letter);
@@ -267,8 +268,8 @@ void Genius::fixWrong(std::set<char> &wrongSet, std::set<char> inWordSet) {
  * The algorithm is not that complicated, you can figure it out by reading the code
  */
 std::vector<std::string>
-Genius::findMatching(std::vector<std::string> allWords, std::string currentConfirmed, std::set<char> currentInWord,
-                     std::set<char> currentWrong, std::vector<std::set<char>> currentNotHere) {
+Genius::findMatching(std::vector<std::string> allWords, std::string currentConfirmed, const std::set<char>& currentInWord,
+                     const std::set<char>& currentWrong, std::vector<std::set<char>> currentNotHere) const {
     std::vector<std::string> currentMatching;
     int inWordDistr[26], distr[26];
     std::fill(inWordDistr, inWordDistr + 26, 0);
@@ -322,7 +323,7 @@ Genius::findMatching(std::vector<std::string> allWords, std::string currentConfi
  * @return
  */
 std::vector<std::string>
-Genius::findDataWords(std::vector<std::string> allWords, std::set<char> currentInWord, std::set<char> currentWrong) {
+Genius::findDataWords(const std::vector<std::string>& allWords, const std::set<char>& currentInWord, const std::set<char>& currentWrong) const {
     std::vector<std::string> wordSplit[this->wordSize * 2 + 1];
     int goodScore;
     bool bad;
@@ -362,10 +363,10 @@ Genius::findDataWords(std::vector<std::string> allWords, std::set<char> currentI
  * @return a list containing 10 good starting words
  */
 std::vector<std::string> Genius::getStarters() {
-    std::mt19937 gen(time(nullptr));
+    std::mt19937 gen(time(nullptr)); // NOLINT(cert-msc51-cpp) it really doesn't matter
     std::shuffle(this->bestStarters[this->wordSize - 4].begin(), this->bestStarters[this->wordSize - 4].end(), gen);
     std::vector<std::string> starters;
-    int amount = this->bestStarters[this->wordSize - 4].size();
+    int amount = this->bestStarters[this->wordSize - 4].size(); // NOLINT(cppcoreguidelines-narrowing-conversions) doesn't matter
     amount = std::min(amount, 10);
     for (int i = 0; i < amount; i++) {
         starters.push_back(bestStarters[this->wordSize - 4][i]);
@@ -379,8 +380,8 @@ std::vector<std::string> Genius::getStarters() {
  * @param result result of entering that word into Wordle
  */
 void Genius::enterWord(std::string enteredWord, std::string result) {
-    this->userWord = enteredWord;
-    this->userResult = result;
+    this->userWord = std::move(enteredWord);
+    this->userResult = std::move(result);
 }
 
 /**
@@ -403,7 +404,7 @@ void Genius::analyze() {
  * @return Amount of matching words
  */
 int Genius::getMatchingAmount() {
-    return this->matching.size();
+    return this->matching.size(); // NOLINT(cppcoreguidelines-narrowing-conversions) doesn't matter
 }
 
 /**
@@ -420,7 +421,7 @@ std::vector<std::string> Genius::getMatching() {
  */
 std::vector<std::string> Genius::getDataWords() {
     std::vector<std::string> dataWordsBatch;
-    int batchPointer = this->dataWords.size();
+    int batchPointer = this->dataWords.size(); // NOLINT(cppcoreguidelines-narrowing-conversions) doesn't matter
     batchPointer = std::min(batchPointer, currentDataWordIndex + 10);
     for (int i = currentDataWordIndex; i < batchPointer; i++) {
         dataWordsBatch.push_back(this->dataWords[i]);
@@ -463,7 +464,7 @@ void Genius::saveWordCache() {
     for (int i = 0; i < 8; i++) {
         if (!this->bestStarters[i].empty()) {
             wordCache << i + 4 << std::endl;
-            for (auto word: bestStarters[i]) {
+            for (const auto& word: bestStarters[i]) {
                 wordCache << word << std::endl;
             }
         }

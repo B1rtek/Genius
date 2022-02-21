@@ -3,7 +3,7 @@
 /**
  * @brief Creates the button array and places it in the specified grid layout
  */
-WordleWord::WordleWord(QGridLayout *parentGridLayout) {
+WordleWord::WordleWord(QGridLayout *parentGridLayout) { // NOLINT(cppcoreguidelines-pro-type-member-init)
     for (int i = 0; i < 5; i++) {
         auto *button = new WordleButton();
         this->buttons.push_back(button);
@@ -14,7 +14,7 @@ WordleWord::WordleWord(QGridLayout *parentGridLayout) {
 }
 
 /// Needed because GeniusWindow() constructor gets angry
-WordleWord::WordleWord() = default;
+WordleWord::WordleWord() = default; // NOLINT(cppcoreguidelines-pro-type-member-init)
 
 /**
  * @brief Removes or adds WordleButtons to match the new word length
@@ -30,7 +30,7 @@ void WordleWord::changeLength(int newLength) {
     while (newLength > this->buttons.size()) {
         auto *button = new WordleButton();
         this->buttons.push_back(button);
-        this->gridLayout->addWidget(button, 0, this->buttons.size());
+        this->gridLayout->addWidget(button, 0, this->buttons.size()); // NOLINT(cppcoreguidelines-narrowing-conversions)
     }
     this->reset();
 }
@@ -94,7 +94,7 @@ void WordleWord::reset() {
  * @param newWord new word to enter
  */
 void WordleWord::enterWord(std::string newWord) {
-    this->wordPointer = this->buttons.size();
+    this->wordPointer = this->buttons.size(); // NOLINT(cppcoreguidelines-narrowing-conversions)
     for(int i=0; i<this->buttons.size(); i++) {
         this->buttons[i]->reset();
         this->buttons[i]->setLetter(newWord[i]);
