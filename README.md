@@ -15,7 +15,7 @@ console, `Genius-cli`.
 To use Genius, you'll need a word list. The better the word list you choose, the better will the Genius work. You can
 use [this one](https://github.com/dwyl/english-words/blob/master/words_alpha.txt) for example, but it contains a lot of garbage words like 'aam' or 'abama' and many more that are not
 accepted, I used it because it's the longest reasonable one. When you find one, rename it to `words.txt` and put it in
-the same directory as the executable.
+the same directory as the executable. If you change the `words.txt` file, you should also delete `wordCache.gen`, because the cache of the best starter words needs to be created again.
 
 ### The GUI Version
 
