@@ -45,6 +45,9 @@ void GeniusWindow::confirmButton() {
     this->ui.listMatching->clear();
     this->ui.listSuggested->clear();
     std::pair<std::string, std::string> userInput = this->wordDisplay.getUserInput();
+    if(userInput.first.empty() || userInput.second.empty()) {
+        return;
+    }
     this->genius.enterWord(userInput.first, userInput.second);
     this->genius.analyze();
     int matchingAmount = this->genius.getMatchingAmount();
