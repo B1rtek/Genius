@@ -447,6 +447,7 @@ void Genius::reset() {
     this->inWord.clear();
     this->notHere.clear();
     this->confirmed.clear();
+    this->dataWords.clear();
     notHere.reserve(wordSize);
     for (int i = 0; i < this->wordSize; i++) {
         notHere.emplace_back();
