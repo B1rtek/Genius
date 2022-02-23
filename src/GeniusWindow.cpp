@@ -122,6 +122,8 @@ void GeniusWindow::showSuggestedWords() {
 void GeniusWindow::keyPressEvent(QKeyEvent *event) {
     if(event->key() == Qt::Key_Backspace) {
         this->wordDisplay.backspace();
+    } else if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+        this->confirmButton();
     } else {
         this->wordDisplay.addLetter(static_cast<Qt::Key>(event->key()));
     }
