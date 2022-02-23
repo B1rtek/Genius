@@ -480,6 +480,11 @@ bool Genius::checkIfWordsFileExists() {
     return fileExists("words.txt");
 }
 
+/**
+ * @brief Starts Genius
+ *
+ * Contains a part of constructor that segfaults if no words.txt is present
+ */
 void Genius::start() {
     loadWords();
 }

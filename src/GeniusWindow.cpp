@@ -1,6 +1,7 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include "GeniusWindow.h"
+#include "ui_help.h"
 
 /**
  * @brief Initializes all elements of the game and all additional widgets created
@@ -33,6 +34,7 @@ void GeniusWindow::linkButtons() const {
     connect(this->ui.buttonSuggested, &QPushButton::clicked, this, &GeniusWindow::showSuggestedWords);
     connect(this->ui.listMatching, &QListWidget::itemClicked, this, &GeniusWindow::enterWordFromList);
     connect(this->ui.listSuggested, &QListWidget::itemClicked, this, &GeniusWindow::enterWordFromList);
+    connect(this->ui.actionHelp, &QAction::triggered, this, &GeniusWindow::showHelp);
 }
 
 /**
@@ -89,6 +91,18 @@ void GeniusWindow::showMatchingWords() {
     for (auto &item: matching) {
         this->ui.listMatching->addItem(item.c_str());
     }
+}
+
+/**
+ * @brief Shows the help window
+ */
+void GeniusWindow::showHelp() {
+    Ui_GeniusHelp helpUI;
+    QDialog *helpDialog = new QDialog();
+    helpUI.setupUi(helpDialog);
+    connect(helpUI.buttonOk, &QPushButton::clicked, helpDialog, &QDialog::close);
+    helpDialog->setModal(true);
+    helpDialog->show();
 }
 
 /**

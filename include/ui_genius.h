@@ -6,16 +6,18 @@
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef GENIUS_H
-#define GENIUS_H
+#ifndef UI_GENIUS_H
+#define UI_GENIUS_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
@@ -29,6 +31,7 @@ QT_BEGIN_NAMESPACE
 class Ui_Genius
 {
 public:
+    QAction *actionHelp;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout_4;
     QLabel *labelGenius;
@@ -54,6 +57,7 @@ public:
     QPushButton *buttonSuggested;
     QListWidget *listSuggested;
     QMenuBar *menubar;
+    QMenu *menuHelp;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *Genius)
@@ -61,6 +65,10 @@ public:
         if (Genius->objectName().isEmpty())
             Genius->setObjectName(QString::fromUtf8("Genius"));
         Genius->resize(800, 543);
+        actionHelp = new QAction(Genius);
+        actionHelp->setObjectName(QString::fromUtf8("actionHelp"));
+        QIcon icon(QIcon::fromTheme(QString::fromUtf8("help")));
+        actionHelp->setIcon(icon);
         centralwidget = new QWidget(Genius);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayout_4 = new QVBoxLayout(centralwidget);
@@ -197,11 +205,16 @@ public:
         Genius->setCentralWidget(centralwidget);
         menubar = new QMenuBar(Genius);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 21));
+        menubar->setGeometry(QRect(0, 0, 800, 27));
+        menuHelp = new QMenu(menubar);
+        menuHelp->setObjectName(QString::fromUtf8("menuHelp"));
         Genius->setMenuBar(menubar);
         statusbar = new QStatusBar(Genius);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         Genius->setStatusBar(statusbar);
+
+        menubar->addAction(menuHelp->menuAction());
+        menuHelp->addAction(actionHelp);
 
         retranslateUi(Genius);
 
@@ -211,6 +224,7 @@ public:
     void retranslateUi(QMainWindow *Genius)
     {
         Genius->setWindowTitle(QCoreApplication::translate("Genius", "Genius", nullptr));
+        actionHelp->setText(QCoreApplication::translate("Genius", "Help", nullptr));
         labelGenius->setText(QCoreApplication::translate("Genius", "Genius", nullptr));
         labelWordLength->setText(QCoreApplication::translate("Genius", "Word length", nullptr));
         buttonConfirm->setText(QCoreApplication::translate("Genius", "Confirm", nullptr));
@@ -219,6 +233,7 @@ public:
         buttonMatching->setText(QCoreApplication::translate("Genius", "Show", nullptr));
         labelSuggestedWords->setText(QCoreApplication::translate("Genius", "Suggested words", nullptr));
         buttonSuggested->setText(QCoreApplication::translate("Genius", "More", nullptr));
+        menuHelp->setTitle(QCoreApplication::translate("Genius", "Help", nullptr));
     } // retranslateUi
 
 };
@@ -229,4 +244,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // GENIUS_H
+#endif // UI_GENIUS_H

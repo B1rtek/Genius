@@ -28,6 +28,8 @@ class GeniusWindow : public QMainWindow {
 
     void enterWordFromList(QListWidgetItem *item);
 
+    void showHelp();
+
 public:
     explicit GeniusWindow(QWidget *parent = nullptr);
 
