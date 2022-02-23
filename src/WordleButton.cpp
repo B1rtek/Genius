@@ -73,7 +73,11 @@ void WordleButton::mousePressEvent(QMouseEvent *event) {
  */
 void WordleButton::setLetter(char newLetter) {
     this->letter = newLetter;
-    this->setText(QString(char(int(this->letter) - 32)));
+    if(this->letter == ' ') {
+        this->setText(" ");
+    } else {
+        this->setText(QString(char(int(this->letter) - 32)));
+    }
 }
 
 /**
