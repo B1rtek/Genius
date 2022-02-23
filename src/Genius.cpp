@@ -93,7 +93,6 @@ bool isNumeric(std::string &possiblyNumber) {
 Genius::Genius() {
     this->wordSize = 5;
     this->currentDataWordIndex = 0;
-    this->loadWords();
 }
 
 /**
@@ -471,4 +470,16 @@ void Genius::saveWordCache() {
         }
     }
     wordCache.close();
+}
+
+/**
+ * @brief Checks if the words dictionary file exists
+ * @return true if it does, false otherwise
+ */
+bool Genius::checkIfWordsFileExists() {
+    return fileExists("words.txt");
+}
+
+void Genius::start() {
+    loadWords();
 }

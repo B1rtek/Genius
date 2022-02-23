@@ -1,4 +1,5 @@
 #include <QKeyEvent>
+#include <QMessageBox>
 #include "GeniusWindow.h"
 
 /**
@@ -11,6 +12,11 @@ GeniusWindow::GeniusWindow(QWidget *parent) {
     this->ui.setupUi(this);
     this->wordDisplay = WordleWord(this->ui.gridLetters);
     this->genius = Genius();
+    if(!this->genius.checkIfWordsFileExists()) {
+        QMessageBox::critical(this, "Genius", "Misssing words.txt file.", QMessageBox::Ok);
+        exit(0);
+    }
+    this->genius.start();
     this->resetButton();
     this->linkButtons();
 }

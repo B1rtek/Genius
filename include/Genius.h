@@ -69,6 +69,10 @@ public:
     void reset();
 
     void saveWordCache();
+
+    bool checkIfWordsFileExists();
+
+    void start();
 };
 
 #endif //GENIUS_GENIUS_H
