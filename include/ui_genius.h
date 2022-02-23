@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -33,9 +34,12 @@ class Ui_Genius
 public:
     QAction *actionHelp;
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout_4;
+    QVBoxLayout *verticalLayout_7;
     QLabel *labelGenius;
     QHBoxLayout *horizontalLayout_4;
+    QVBoxLayout *verticalLayout_4;
+    QLabel *label;
+    QComboBox *comboBoxWordlist;
     QVBoxLayout *verticalLayout_3;
     QLabel *labelWordLength;
     QSlider *sliderWordLength;
@@ -67,12 +71,18 @@ public:
         Genius->resize(800, 543);
         actionHelp = new QAction(Genius);
         actionHelp->setObjectName(QString::fromUtf8("actionHelp"));
-        QIcon icon(QIcon::fromTheme(QString::fromUtf8("help")));
+        QIcon icon;
+        QString iconThemeName = QString::fromUtf8("help");
+        if (QIcon::hasThemeIcon(iconThemeName)) {
+            icon = QIcon::fromTheme(iconThemeName);
+        } else {
+            icon.addFile(QString::fromUtf8("."), QSize(), QIcon::Normal, QIcon::Off);
+        }
         actionHelp->setIcon(icon);
         centralwidget = new QWidget(Genius);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        verticalLayout_4 = new QVBoxLayout(centralwidget);
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        verticalLayout_7 = new QVBoxLayout(centralwidget);
+        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
         labelGenius = new QLabel(centralwidget);
         labelGenius->setObjectName(QString::fromUtf8("labelGenius"));
         QFont font;
@@ -80,10 +90,31 @@ public:
         labelGenius->setFont(font);
         labelGenius->setAlignment(Qt::AlignCenter);
 
-        verticalLayout_4->addWidget(labelGenius);
+        verticalLayout_7->addWidget(labelGenius);
 
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        label = new QLabel(centralwidget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_4->addWidget(label);
+
+        comboBoxWordlist = new QComboBox(centralwidget);
+        comboBoxWordlist->setObjectName(QString::fromUtf8("comboBoxWordlist"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(comboBoxWordlist->sizePolicy().hasHeightForWidth());
+        comboBoxWordlist->setSizePolicy(sizePolicy);
+
+        verticalLayout_4->addWidget(comboBoxWordlist);
+
+
+        horizontalLayout_4->addLayout(verticalLayout_4);
+
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         labelWordLength = new QLabel(centralwidget);
@@ -94,11 +125,11 @@ public:
 
         sliderWordLength = new QSlider(centralwidget);
         sliderWordLength->setObjectName(QString::fromUtf8("sliderWordLength"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(sliderWordLength->sizePolicy().hasHeightForWidth());
-        sliderWordLength->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(sliderWordLength->sizePolicy().hasHeightForWidth());
+        sliderWordLength->setSizePolicy(sizePolicy1);
         sliderWordLength->setMinimum(4);
         sliderWordLength->setMaximum(11);
         sliderWordLength->setOrientation(Qt::Horizontal);
@@ -137,7 +168,7 @@ public:
         horizontalLayout_4->addLayout(horizontalLayout_3);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_4);
+        verticalLayout_7->addLayout(horizontalLayout_4);
 
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
@@ -148,11 +179,11 @@ public:
         horizontalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
         labelMatchingWords = new QLabel(centralwidget);
         labelMatchingWords->setObjectName(QString::fromUtf8("labelMatchingWords"));
-        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(labelMatchingWords->sizePolicy().hasHeightForWidth());
-        labelMatchingWords->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(labelMatchingWords->sizePolicy().hasHeightForWidth());
+        labelMatchingWords->setSizePolicy(sizePolicy2);
         labelMatchingWords->setAlignment(Qt::AlignCenter);
 
         horizontalLayout->addWidget(labelMatchingWords, 0, Qt::AlignRight);
@@ -200,7 +231,7 @@ public:
         horizontalLayout_5->addLayout(verticalLayout_2);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_5);
+        verticalLayout_7->addLayout(horizontalLayout_5);
 
         Genius->setCentralWidget(centralwidget);
         menubar = new QMenuBar(Genius);
@@ -226,6 +257,7 @@ public:
         Genius->setWindowTitle(QCoreApplication::translate("Genius", "Genius", nullptr));
         actionHelp->setText(QCoreApplication::translate("Genius", "Help", nullptr));
         labelGenius->setText(QCoreApplication::translate("Genius", "Genius", nullptr));
+        label->setText(QCoreApplication::translate("Genius", "Dictionary", nullptr));
         labelWordLength->setText(QCoreApplication::translate("Genius", "Word length", nullptr));
         buttonConfirm->setText(QCoreApplication::translate("Genius", "Confirm", nullptr));
         buttonReset->setText(QCoreApplication::translate("Genius", "Reset", nullptr));

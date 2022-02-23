@@ -1,6 +1,7 @@
 #include <QKeyEvent>
 #include <QMessageBox>
 #include "GeniusWindow.h"
+#include "WordlistLoader.h"
 #include "ui_help.h"
 
 /**
@@ -13,6 +14,9 @@ GeniusWindow::GeniusWindow(QWidget *parent) {
     this->ui.setupUi(this);
     this->wordDisplay = WordleWord(this->ui.gridLetters);
     this->genius = Genius();
+    WordlistLoader wordlistLoader = WordlistLoader();
+    wordlistLoader.findWordlists();
+    wordlistLoader.addWordlistsToList(this->ui.comboBoxWordlist);
     if(!this->genius.checkIfWordsFileExists()) {
         QMessageBox::critical(this, "Genius", "Misssing words.txt file.", QMessageBox::Ok);
         exit(0);
