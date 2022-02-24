@@ -3,6 +3,7 @@
 #include "GeniusWindow.h"
 #include "WordlistLoader.h"
 #include "ui_help.h"
+#include "ui_settings.h"
 
 /**
  * @brief Initializes all elements of the game and all additional widgets created
@@ -40,8 +41,9 @@ void GeniusWindow::linkButtons() const {
     connect(this->ui.buttonSuggested, &QPushButton::clicked, this, &GeniusWindow::showSuggestedWords);
     connect(this->ui.listMatching, &QListWidget::itemClicked, this, &GeniusWindow::enterWordFromList);
     connect(this->ui.listSuggested, &QListWidget::itemClicked, this, &GeniusWindow::enterWordFromList);
-    connect(this->ui.actionHelp, &QAction::triggered, this, &GeniusWindow::showHelp);
     connect(this->ui.comboBoxWordlist, &QComboBox::currentTextChanged, this, &GeniusWindow::loadNewDictionary);
+    connect(this->ui.actionSettings, &QAction::triggered, this, &GeniusWindow::showSettings);
+    connect(this->ui.actionHelp, &QAction::triggered, this, &GeniusWindow::showHelp);
 }
 
 /**
@@ -101,15 +103,26 @@ void GeniusWindow::showMatchingWords() {
 }
 
 /**
- * @brief Shows the help window
+ * @brief Shows the help dialog
  */
 void GeniusWindow::showHelp() {
     Ui_GeniusHelp helpUI;
     QDialog *helpDialog = new QDialog();
     helpUI.setupUi(helpDialog);
     connect(helpUI.buttonOk, &QPushButton::clicked, helpDialog, &QDialog::close);
-    helpDialog->setModal(true);
     helpDialog->show();
+}
+
+/**
+ * @brief Shows the settings dialog
+ */
+void GeniusWindow::showSettings() {
+    Ui_GeniusSettings settingsUI;
+    QDialog *settingsDialog = new QDialog();
+    settingsUI.setupUi(settingsDialog);
+    connect(settingsUI.buttonOk, &QPushButton::clicked, settingsDialog, &QDialog::close);
+    settingsDialog->setModal(true);
+    settingsDialog->show();
 }
 
 /**
@@ -160,5 +173,3 @@ void GeniusWindow::loadNewDictionary(QString path) {
     this->genius.start(path.toStdString());
     this->resetButton();
 }
-
-

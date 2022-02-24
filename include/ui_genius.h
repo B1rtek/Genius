@@ -6,8 +6,8 @@
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_GENIUS_H
-#define UI_GENIUS_H
+#ifndef GENIUS_H
+#define GENIUS_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -33,6 +33,7 @@ class Ui_Genius
 {
 public:
     QAction *actionHelp;
+    QAction *actionSettings;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout_7;
     QLabel *labelGenius;
@@ -79,6 +80,10 @@ public:
             icon.addFile(QString::fromUtf8("."), QSize(), QIcon::Normal, QIcon::Off);
         }
         actionHelp->setIcon(icon);
+        actionSettings = new QAction(Genius);
+        actionSettings->setObjectName(QString::fromUtf8("actionSettings"));
+        QIcon icon1(QIcon::fromTheme(QString::fromUtf8("settings")));
+        actionSettings->setIcon(icon1);
         centralwidget = new QWidget(Genius);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayout_7 = new QVBoxLayout(centralwidget);
@@ -236,7 +241,7 @@ public:
         Genius->setCentralWidget(centralwidget);
         menubar = new QMenuBar(Genius);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 848, 21));
+        menubar->setGeometry(QRect(0, 0, 848, 27));
         menuHelp = new QMenu(menubar);
         menuHelp->setObjectName(QString::fromUtf8("menuHelp"));
         Genius->setMenuBar(menubar);
@@ -245,6 +250,7 @@ public:
         Genius->setStatusBar(statusbar);
 
         menubar->addAction(menuHelp->menuAction());
+        menuHelp->addAction(actionSettings);
         menuHelp->addAction(actionHelp);
 
         retranslateUi(Genius);
@@ -256,6 +262,7 @@ public:
     {
         Genius->setWindowTitle(QCoreApplication::translate("Genius", "Genius", nullptr));
         actionHelp->setText(QCoreApplication::translate("Genius", "Help", nullptr));
+        actionSettings->setText(QCoreApplication::translate("Genius", "Settings", nullptr));
         labelGenius->setText(QCoreApplication::translate("Genius", "Genius", nullptr));
         label->setText(QCoreApplication::translate("Genius", "Dictionary", nullptr));
         labelWordLength->setText(QCoreApplication::translate("Genius", "Word length", nullptr));
@@ -265,7 +272,7 @@ public:
         buttonMatching->setText(QCoreApplication::translate("Genius", "Show", nullptr));
         labelSuggestedWords->setText(QCoreApplication::translate("Genius", "Suggested words", nullptr));
         buttonSuggested->setText(QCoreApplication::translate("Genius", "More", nullptr));
-        menuHelp->setTitle(QCoreApplication::translate("Genius", "Help", nullptr));
+        menuHelp->setTitle(QCoreApplication::translate("Genius", "Options", nullptr));
     } // retranslateUi
 
 };
@@ -276,4 +283,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // UI_GENIUS_H
+#endif // GENIUS_H

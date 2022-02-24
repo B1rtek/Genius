@@ -30,6 +30,8 @@ class GeniusWindow : public QMainWindow {
 
     void showHelp();
 
+    void showSettings();
+
 public:
     explicit GeniusWindow(QWidget *parent = nullptr);
 
