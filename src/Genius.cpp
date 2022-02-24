@@ -98,9 +98,9 @@ Genius::Genius() {
 /**
  * @brief Loads words from the dictionary
  */
-void Genius::loadWords() {
+void Genius::loadWords(std::string path) {
     std::fstream wordlist;
-    wordlist.open("words.txt", std::ios::in);
+    wordlist.open(path.c_str(), std::ios::in);
     std::string word;
     while (getline(wordlist, word)) {
         word = Genius::purify(word);
@@ -485,6 +485,6 @@ bool Genius::checkIfWordsFileExists() {
  *
  * Contains a part of constructor that segfaults if no words.txt is present
  */
-void Genius::start() {
-    loadWords();
+void Genius::start(std::string path) {
+    loadWords(path);
 }

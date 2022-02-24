@@ -21,6 +21,8 @@ public:
     void findWordlists();
 
     void addWordlistsToList(QComboBox *comboBox);
+
+    bool wordlistMissing();
 };
 
 

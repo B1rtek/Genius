@@ -68,7 +68,7 @@ public:
     {
         if (Genius->objectName().isEmpty())
             Genius->setObjectName(QString::fromUtf8("Genius"));
-        Genius->resize(800, 543);
+        Genius->resize(848, 543);
         actionHelp = new QAction(Genius);
         actionHelp->setObjectName(QString::fromUtf8("actionHelp"));
         QIcon icon;
@@ -236,7 +236,7 @@ public:
         Genius->setCentralWidget(centralwidget);
         menubar = new QMenuBar(Genius);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 27));
+        menubar->setGeometry(QRect(0, 0, 848, 21));
         menuHelp = new QMenu(menubar);
         menuHelp->setObjectName(QString::fromUtf8("menuHelp"));
         Genius->setMenuBar(menubar);

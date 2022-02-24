@@ -17,11 +17,13 @@ GeniusWindow::GeniusWindow(QWidget *parent) {
     WordlistLoader wordlistLoader = WordlistLoader();
     wordlistLoader.findWordlists();
     wordlistLoader.addWordlistsToList(this->ui.comboBoxWordlist);
-    if(!this->genius.checkIfWordsFileExists()) {
-        QMessageBox::critical(this, "Genius", "Misssing words.txt file.", QMessageBox::Ok);
+    if (wordlistLoader.wordlistMissing()) {
+        QMessageBox::critical(this, "Genius",
+                              "No dictionaries found. Make sure that you put a words.txt file in the app directory, or place a dictionary in the dictionaries folder.",
+                              QMessageBox::Ok);
         exit(0);
     }
-    this->genius.start();
+    this->genius.start(this->ui.comboBoxWordlist->currentText().toStdString());
     this->resetButton();
     this->linkButtons();
 }
@@ -55,7 +57,7 @@ void GeniusWindow::wordLengthChange() {
  */
 void GeniusWindow::confirmButton() {
     std::pair<std::string, std::string> userInput = this->wordDisplay.getUserInput();
-    if(userInput.first.empty() || userInput.second.empty()) {
+    if (userInput.first.empty() || userInput.second.empty()) {
         return;
     }
     this->ui.listMatching->clear();
@@ -65,7 +67,7 @@ void GeniusWindow::confirmButton() {
     int matchingAmount = this->genius.getMatchingAmount();
     std::string newMatchingText = "Matching words: " + std::to_string(matchingAmount);
     this->ui.labelMatchingWords->setText(newMatchingText.c_str());
-    if(matchingAmount <= 10) {
+    if (matchingAmount <= 10) {
         this->showMatchingWords();
     }
     this->showSuggestedWords();
@@ -79,7 +81,7 @@ void GeniusWindow::resetButton() {
     this->wordDisplay.reset();
     this->ui.listMatching->clear();
     this->ui.listSuggested->clear();
-    std::vector<std::string>starters = this->genius.getStarters();
+    std::vector<std::string> starters = this->genius.getStarters();
     for (auto &item: starters) {
         this->ui.listSuggested->addItem(item.c_str());
     }
@@ -124,7 +126,7 @@ void GeniusWindow::showSuggestedWords() {
  * @param event Qt5 QKeyEvent
  */
 void GeniusWindow::keyPressEvent(QKeyEvent *event) {
-    if(event->key() == Qt::Key_Backspace) {
+    if (event->key() == Qt::Key_Backspace) {
         this->wordDisplay.backspace();
     } else if (event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
         this->confirmButton();

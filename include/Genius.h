@@ -23,7 +23,7 @@ class Genius {
     std::vector<std::string> matching, dataWords;
     int currentDataWordIndex;
 
-    void loadWords();
+    void loadWords(std::string path);
 
     static std::string purify(std::string word);
 
@@ -72,7 +72,7 @@ public:
 
     bool checkIfWordsFileExists();
 
-    void start();
+    void start(std::string path);
 };
 
 #endif //GENIUS_GENIUS_H
