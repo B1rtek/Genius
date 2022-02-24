@@ -10,7 +10,7 @@ endif (WIN32)
 
 find_package(Qt5Widgets REQUIRED)
 
-set(GUI_SOURCE_FILES src/Genius.cpp include/Genius.h src/WordleButton.cpp include/WordleButton.h src/WordleWord.cpp include/WordleWord.h src/GeniusWindow.cpp include/GeniusWindow.h src/WordlistLoader.cpp include/WordlistLoader.h)
+set(GUI_SOURCE_FILES src/Genius.cpp include/Genius.h src/WordleButton.cpp include/WordleButton.h src/WordleWord.cpp include/WordleWord.h src/GeniusWindow.cpp include/GeniusWindow.h src/WordlistLoader.cpp include/WordlistLoader.h src/Settings.cpp include/Settings.h)
 
 add_executable(Genius-cli mainOld.cpp)
 if (WIN32)
