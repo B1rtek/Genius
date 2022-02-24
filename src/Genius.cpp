@@ -93,14 +93,27 @@ bool isNumeric(std::string &possiblyNumber) {
 Genius::Genius() {
     this->wordSize = 5;
     this->currentDataWordIndex = 0;
+    this->dictionaryPath = "";
 }
 
 /**
  * @brief Loads words from the dictionary
  */
-void Genius::loadWords(std::string path) {
+void Genius::loadWords(const std::string &path) {
+    for (int i = 0; i < 8; i++) {
+        this->dictionary[i].clear();
+        this->bestStarters[i].clear();
+    }
+    std::string pathToDict, pathToCache;
+    if (path == "default") {
+        pathToDict = "words.txt";
+        pathToCache = "wordCache.gen";
+    } else {
+        pathToDict = "dictionaries/" + path;
+        pathToCache = "dictionaries/" + path + ".cache";
+    }
     std::fstream wordlist;
-    wordlist.open(path.c_str(), std::ios::in);
+    wordlist.open(pathToDict.c_str(), std::ios::in);
     std::string word;
     while (getline(wordlist, word)) {
         word = Genius::purify(word);
@@ -110,10 +123,10 @@ void Genius::loadWords(std::string path) {
         this->dictionary[word.size() - 4].push_back(word);
     }
     wordlist.close();
-    if (fileExists("wordCache.gen")) {
+    if (fileExists(pathToCache)) {
         std::fstream wordCache;
         int currentLength = 0;
-        wordCache.open("wordCache.gen", std::ios::in);
+        wordCache.open(pathToCache.c_str(), std::ios::in);
         while (getline(wordCache, word)) {
             if (word.size() < 4) {
                 if (isNumeric(word)) {
@@ -154,7 +167,11 @@ std::string Genius::purify(std::string word) {
 void Genius::findStarters() {
     if (this->bestStarters[wordSize - 4].empty()) {
         sort(this->dictionary[wordSize - 4].begin(), this->dictionary[wordSize - 4].end(), compare);
-        int k = 0, minScore = calculateScore(dictionary[wordSize - 4][0]);
+        int k = 0;
+        if(this->dictionary[wordSize - 4].empty()) {
+            return;
+        }
+        int minScore = calculateScore(dictionary[wordSize - 4][0]);
         while (calculateScore(dictionary[wordSize - 4][k]) == minScore) {
             bestStarters[wordSize - 4].push_back(dictionary[wordSize - 4][k]);
             k++;
@@ -247,7 +264,7 @@ void Genius::addWrong(std::set<char> &wrongSet, std::string input, std::string y
  * @param wrong set of wrong letters
  * @param inWord set of letters in the word
  */
-void Genius::fixWrong(std::set<char> &wrongSet, const std::set<char>& inWordSet) {
+void Genius::fixWrong(std::set<char> &wrongSet, const std::set<char> &inWordSet) {
     for (auto &letter: inWordSet) {
         if (wrongSet.count(letter)) {
             wrongSet.erase(letter);
@@ -267,8 +284,9 @@ void Genius::fixWrong(std::set<char> &wrongSet, const std::set<char>& inWordSet)
  * The algorithm is not that complicated, you can figure it out by reading the code
  */
 std::vector<std::string>
-Genius::findMatching(std::vector<std::string> allWords, std::string currentConfirmed, const std::set<char>& currentInWord,
-                     const std::set<char>& currentWrong, std::vector<std::set<char>> currentNotHere) const {
+Genius::findMatching(std::vector<std::string> allWords, std::string currentConfirmed,
+                     const std::set<char> &currentInWord,
+                     const std::set<char> &currentWrong, std::vector<std::set<char>> currentNotHere) const {
     std::vector<std::string> currentMatching;
     int inWordDistr[26], distr[26];
     std::fill(inWordDistr, inWordDistr + 26, 0);
@@ -322,7 +340,8 @@ Genius::findMatching(std::vector<std::string> allWords, std::string currentConfi
  * @return
  */
 std::vector<std::string>
-Genius::findDataWords(const std::vector<std::string>& allWords, const std::set<char>& currentInWord, const std::set<char>& currentWrong) const {
+Genius::findDataWords(const std::vector<std::string> &allWords, const std::set<char> &currentInWord,
+                      const std::set<char> &currentWrong) const {
     std::vector<std::string> wordSplit[this->wordSize * 2 + 1];
     int goodScore;
     bool bad;
@@ -365,7 +384,8 @@ std::vector<std::string> Genius::getStarters() {
     std::mt19937 gen(time(nullptr)); // NOLINT(cert-msc51-cpp) it really doesn't matter
     std::shuffle(this->bestStarters[this->wordSize - 4].begin(), this->bestStarters[this->wordSize - 4].end(), gen);
     std::vector<std::string> starters;
-    int amount = this->bestStarters[this->wordSize - 4].size(); // NOLINT(cppcoreguidelines-narrowing-conversions) doesn't matter
+    int amount = this->bestStarters[this->wordSize -
+                                    4].size(); // NOLINT(cppcoreguidelines-narrowing-conversions) doesn't matter
     amount = std::min(amount, 10);
     for (int i = 0; i < amount; i++) {
         starters.push_back(bestStarters[this->wordSize - 4][i]);
@@ -459,12 +479,21 @@ void Genius::reset() {
  * @brief Saves the bestStarters lists to wordCache.gen
  */
 void Genius::saveWordCache() {
+    std::string cachePath;
+    if(dictionaryPath.empty()) {
+        return;
+    }
+    if(this->dictionaryPath == "default") {
+        cachePath = "wordCache.gen";
+    } else {
+        cachePath = "dictionaries/"+this->dictionaryPath+".cache";
+    }
     std::fstream wordCache;
-    wordCache.open("wordCache.gen", std::ios::out);
+    wordCache.open(cachePath.c_str(), std::ios::out);
     for (int i = 0; i < 8; i++) {
         if (!this->bestStarters[i].empty()) {
             wordCache << i + 4 << std::endl;
-            for (const auto& word: bestStarters[i]) {
+            for (const auto &word: bestStarters[i]) {
                 wordCache << word << std::endl;
             }
         }
@@ -486,5 +515,8 @@ bool Genius::checkIfWordsFileExists() {
  * Contains a part of constructor that segfaults if no words.txt is present
  */
 void Genius::start(std::string path) {
+    this->saveWordCache();
+    this->dictionaryPath = path;
+    this->reset();
     loadWords(path);
 }

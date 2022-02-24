@@ -41,6 +41,7 @@ void GeniusWindow::linkButtons() const {
     connect(this->ui.listMatching, &QListWidget::itemClicked, this, &GeniusWindow::enterWordFromList);
     connect(this->ui.listSuggested, &QListWidget::itemClicked, this, &GeniusWindow::enterWordFromList);
     connect(this->ui.actionHelp, &QAction::triggered, this, &GeniusWindow::showHelp);
+    connect(this->ui.comboBoxWordlist, &QComboBox::currentTextChanged, this, &GeniusWindow::loadNewDictionary);
 }
 
 /**
@@ -150,6 +151,14 @@ void GeniusWindow::enterWordFromList(QListWidgetItem *item) {
  */
 void GeniusWindow::closeEvent(QCloseEvent *event) {
     this->genius.saveWordCache();
+}
+
+/**
+ * @brief Loads the specified dicionary
+ */
+void GeniusWindow::loadNewDictionary(QString path) {
+    this->genius.start(path.toStdString());
+    this->resetButton();
 }
 
 

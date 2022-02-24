@@ -36,6 +36,8 @@ public:
     void keyPressEvent(QKeyEvent *event) override;
 
     void closeEvent(QCloseEvent *event) override;
+
+    void loadNewDictionary(QString path);
 };
 
 #endif //GENIUS_GENIUSWINDOW_H

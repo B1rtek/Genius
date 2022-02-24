@@ -54,7 +54,7 @@ std::string WordlistLoader::getExtension(std::string path) {
  */
 void WordlistLoader::findWordlists() {
     if (fileExists("words.txt")) {
-        this->wordlists.emplace_back("words.txt");
+        this->wordlists.emplace_back("default");
     }
     std::vector<std::string> filelist = this->listFilesInDirectory("dictionaries");
     for (auto &file: filelist) {

@@ -22,8 +22,9 @@ class Genius {
     std::string userWord, userResult, confirmed;
     std::vector<std::string> matching, dataWords;
     int currentDataWordIndex;
+    std::string dictionaryPath;
 
-    void loadWords(std::string path);
+    void loadWords(const std::string& path);
 
     static std::string purify(std::string word);
 
