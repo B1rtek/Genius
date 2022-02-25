@@ -74,6 +74,8 @@ public:
     bool checkIfWordsFileExists();
 
     void start(std::string path);
+
+    std::string getCurrentDictionary();
 };
 
 #endif //GENIUS_GENIUS_H

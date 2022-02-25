@@ -23,6 +23,8 @@ public:
     void addWordlistsToList(QComboBox *comboBox);
 
     bool wordlistMissing();
+
+    std::vector<std::string> getDictionariesList();
 };
 
 

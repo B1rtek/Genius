@@ -520,3 +520,10 @@ void Genius::start(std::string path) {
     this->reset();
     loadWords(path);
 }
+
+/**
+ * @return Current dictionary path
+ */
+std::string Genius::getCurrentDictionary() {
+    return this->dictionaryPath;
+}

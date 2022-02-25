@@ -1,5 +1,6 @@
 #include <QKeyEvent>
 #include <QMessageBox>
+#include <QStyleFactory>
 #include "GeniusWindow.h"
 #include "WordlistLoader.h"
 #include "ui_help.h"
@@ -15,16 +16,19 @@ GeniusWindow::GeniusWindow(QWidget *parent) {
     this->ui.setupUi(this);
     this->wordDisplay = WordleWord(this->ui.gridLetters);
     this->genius = Genius();
-    WordlistLoader wordlistLoader = WordlistLoader();
-    wordlistLoader.findWordlists();
-    wordlistLoader.addWordlistsToList(this->ui.comboBoxWordlist);
-    if (wordlistLoader.wordlistMissing()) {
+    this->wordlistLoader = WordlistLoader();
+    this->wordlistLoader.findWordlists();
+    this->wordlistLoader.addWordlistsToList(this->ui.comboBoxWordlist);
+    if (this->wordlistLoader.wordlistMissing()) {
         QMessageBox::critical(this, "Genius",
                               "No dictionaries found. Make sure that you put a words.txt file in the app directory, or place a dictionary in the dictionaries folder.",
                               QMessageBox::Ok);
         exit(0);
     }
-    this->genius.start(this->ui.comboBoxWordlist->currentText().toStdString());
+    this->settings = Settings();
+    this->settings.loadSettings(this->wordlistLoader.getDictionariesList());
+    this->setDarkMode(this->settings.getDarkMode());
+    this->genius.start(this->settings.getDefaultDictionary());
     this->resetButton();
     this->linkButtons();
 }
@@ -120,7 +124,14 @@ void GeniusWindow::showSettings() {
     Ui_GeniusSettings settingsUI;
     QDialog *settingsDialog = new QDialog();
     settingsUI.setupUi(settingsDialog);
+    settingsUI.checkBoxDarkMode->setChecked(this->settings.getDarkMode());
+    for(auto &dict:wordlistLoader.getDictionariesList()) {
+        settingsUI.comboBoxDictSetting->addItem(QString(dict.c_str()));
+    }
+    settingsUI.comboBoxDictSetting->setCurrentIndex(settingsUI.comboBoxDictSetting->findText(QString(this->settings.getDefaultDictionary().c_str())));
     connect(settingsUI.buttonOk, &QPushButton::clicked, settingsDialog, &QDialog::close);
+    connect(settingsUI.checkBoxDarkMode, &QCheckBox::stateChanged, this, &GeniusWindow::setDarkMode);
+    connect(settingsUI.comboBoxDictSetting, &QComboBox::currentTextChanged, this, &GeniusWindow::setDefaultDictionary);
     settingsDialog->setModal(true);
     settingsDialog->show();
 }
@@ -164,12 +175,81 @@ void GeniusWindow::enterWordFromList(QListWidgetItem *item) {
  */
 void GeniusWindow::closeEvent(QCloseEvent *event) {
     this->genius.saveWordCache();
+    this->settings.saveSettings();
 }
 
 /**
  * @brief Loads the specified dicionary
  */
 void GeniusWindow::loadNewDictionary(QString path) {
+    if(path.toStdString() == this->genius.getCurrentDictionary()) {
+        return;
+    }
     this->genius.start(path.toStdString());
     this->resetButton();
+}
+
+/**
+ * @brief Sets the dark mode and saves it in the settings
+ */
+void GeniusWindow::setDarkMode(bool darkMode) {
+    this->settings.setDarkMode(darkMode);
+    // Thank you Jorgen (https://stackoverflow.com/users/6847516/jorgen) for sharing your dark mode palette ^^
+    // https://stackoverflow.com/questions/15035767/is-the-qt-5-dark-fusion-theme-available-for-windows
+    if(darkMode) {
+        QApplication::setStyle(QStyleFactory::create("Fusion"));
+        QPalette darkPalette;
+        darkPalette.setColor(QPalette::Window,QColor(53,53,53));
+        darkPalette.setColor(QPalette::WindowText,Qt::white);
+        darkPalette.setColor(QPalette::Disabled,QPalette::WindowText,QColor(127,127,127));
+        darkPalette.setColor(QPalette::Base,QColor(42,42,42));
+        darkPalette.setColor(QPalette::AlternateBase,QColor(66,66,66));
+        darkPalette.setColor(QPalette::ToolTipBase,Qt::white);
+        darkPalette.setColor(QPalette::ToolTipText,Qt::white);
+        darkPalette.setColor(QPalette::Text,Qt::white);
+        darkPalette.setColor(QPalette::Disabled,QPalette::Text,QColor(127,127,127));
+        darkPalette.setColor(QPalette::Dark,QColor(35,35,35));
+        darkPalette.setColor(QPalette::Shadow,QColor(20,20,20));
+        darkPalette.setColor(QPalette::Button,QColor(53,53,53));
+        darkPalette.setColor(QPalette::ButtonText,Qt::white);
+        darkPalette.setColor(QPalette::Disabled,QPalette::ButtonText,QColor(127,127,127));
+        darkPalette.setColor(QPalette::BrightText,Qt::red);
+        darkPalette.setColor(QPalette::Link,QColor(42,130,218));
+        darkPalette.setColor(QPalette::Highlight,QColor(42,130,218));
+        darkPalette.setColor(QPalette::Disabled,QPalette::Highlight,QColor(80,80,80));
+        darkPalette.setColor(QPalette::HighlightedText,Qt::white);
+        darkPalette.setColor(QPalette::Disabled,QPalette::HighlightedText,QColor(127,127,127));
+        QApplication::setPalette(darkPalette);
+    } else {
+        QApplication::setStyle(QStyleFactory::create("Fusion"));
+        QPalette darkPalette;
+        darkPalette.setColor(QPalette::Window,QColor(202,202,202));
+        darkPalette.setColor(QPalette::WindowText,Qt::black);
+        darkPalette.setColor(QPalette::Disabled,QPalette::WindowText,QColor(128,128,128));
+        darkPalette.setColor(QPalette::Base,QColor(213,213,213));
+        darkPalette.setColor(QPalette::AlternateBase,QColor(189,189,189));
+        darkPalette.setColor(QPalette::ToolTipBase,Qt::black);
+        darkPalette.setColor(QPalette::ToolTipText,Qt::black);
+        darkPalette.setColor(QPalette::Text,Qt::black);
+        darkPalette.setColor(QPalette::Disabled,QPalette::Text,QColor(128,128,128));
+        darkPalette.setColor(QPalette::Dark,QColor(220,220,220));
+        darkPalette.setColor(QPalette::Shadow,QColor(235,235,235));
+        darkPalette.setColor(QPalette::Button,QColor(202,202,202));
+        darkPalette.setColor(QPalette::ButtonText,Qt::black);
+        darkPalette.setColor(QPalette::Disabled,QPalette::ButtonText,QColor(128,128,128));
+        darkPalette.setColor(QPalette::BrightText,Qt::red);
+        darkPalette.setColor(QPalette::Link,QColor(42,130,218));
+        darkPalette.setColor(QPalette::Highlight,QColor(42,130,218));
+        darkPalette.setColor(QPalette::Disabled,QPalette::Highlight,QColor(175,175,175));
+        darkPalette.setColor(QPalette::HighlightedText,Qt::black);
+        darkPalette.setColor(QPalette::Disabled,QPalette::HighlightedText,QColor(128,128,128));
+        QApplication::setPalette(darkPalette);
+    }
+}
+
+/**
+ * @brief Sets the new default dictionary
+ */
+void GeniusWindow::setDefaultDictionary(QString defaultDict) {
+    this->settings.setDefaultDictionary(defaultDict.toStdString());
 }

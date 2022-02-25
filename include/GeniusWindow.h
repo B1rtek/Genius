@@ -5,6 +5,8 @@
 #include "ui_genius.h"
 #include "Genius.h"
 #include "WordleWord.h"
+#include "Settings.h"
+#include "WordlistLoader.h"
 
 /**
  * @brief Class operating the game in the GUI version
@@ -13,6 +15,8 @@ class GeniusWindow : public QMainWindow {
     Ui_Genius ui{};
     Genius genius;
     WordleWord wordDisplay;
+    WordlistLoader wordlistLoader;
+    Settings settings;
 
     void linkButtons() const;
 
@@ -31,6 +35,10 @@ class GeniusWindow : public QMainWindow {
     void showHelp();
 
     void showSettings();
+
+    void setDarkMode(bool darkMode);
+
+    void setDefaultDictionary(QString defaultDict);
 
 public:
     explicit GeniusWindow(QWidget *parent = nullptr);

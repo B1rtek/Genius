@@ -80,3 +80,10 @@ void WordlistLoader::addWordlistsToList(QComboBox *comboBox) {
 bool WordlistLoader::wordlistMissing() {
     return this->wordlists.empty();
 }
+
+/**
+ * @return list of found dictionaries
+ */
+std::vector<std::string> WordlistLoader::getDictionariesList() {
+    return this->wordlists;
+}

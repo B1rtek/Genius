@@ -2,20 +2,22 @@
 #define GENIUS_SETTINGS_H
 
 #include <string>
+#include <vector>
 
 /**
  * @brief Class handing settings like the default dictionary or dark mode
  */
 class Settings {
+    std::string path;
     std::string defaultDict;
     bool darkMode;
 
-    void loadSettings();
-
-    void saveSettings();
-
 public:
     Settings();
+
+    void loadSettings(std::vector<std::string> foundDictionaries);
+
+    void saveSettings();
 
     void setDefaultDictionary(std::string path);
 
