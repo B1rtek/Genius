@@ -14,7 +14,11 @@ WordlistLoader::WordlistLoader() = default;
 std::vector<std::string> WordlistLoader::listFilesInDirectory(std::string path) {
     struct stat info{};
     if(stat("dictionaries", &info) != 0) {
+#ifdef _WIN32
         mkdir("dictionaries");
+#elif linux
+        mkdir("dictionaries", 0);
+#endif
     }
 #ifdef _WIN32
     std::string command = "dir " + path + "/A-D /B > temp.txt";
