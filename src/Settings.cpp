@@ -78,5 +78,5 @@ void Settings::setDarkMode(bool yes) {
  * @return The current state of the dark mode setting
  */
 bool Settings::getDarkMode() {
-    return false;
+    return this->darkMode;
 }
