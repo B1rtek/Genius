@@ -13,26 +13,31 @@ To launch Genius, execute the `Genius-(your system goes here)` executable, or if
 console, `Genius-cli`.
 
 To use Genius, you'll need a word list. The better the word list you choose, the better will the Genius work. You can
-use [this one](https://github.com/dwyl/english-words/blob/master/words_alpha.txt) for example, but it contains a lot of garbage words like 'aam' or 'abama' and many more that are not
-accepted, I used it because it's the longest reasonable one. When you find one, rename it to `words.txt` and put it in
-the same directory as the executable. If you change the `words.txt` file, you should also delete `wordCache.gen`, because the cache of the best starter words needs to be created again.
+use [this one](https://github.com/dwyl/english-words/blob/master/words_alpha.txt) for example, but it contains a lot of
+garbage words like 'aam' or 'abama' and many more that are not accepted, I used it because it's the longest reasonable
+one. When you find one, rename it to `words.txt` and put it in the same directory as the executable. If you change
+the `words.txt` file, you should also delete `wordCache.gen`, because the cache of the best starter words needs to be
+created again.
 
 ### The GUI Version
 
-___Attention: When launched for the first time, it'll lag because it needs to create a dictionary of starter words for
-every word length that you play. On the second try, it'll be smooth.___
+___Attention: When using a dictionary for the first time, it'll lag when you change the word length because it needs to
+create a cache of starter words for every word length that you play. After it finishes, it should be smooth.___
 
 The GUI version has a nice interface which makes solving Wordle easy.
-![Image of me playing the game](tutorial/tutorial1.png)  
+![Image of me playing the game](tutorial/tutorial3.png)  
 When you start Genius, it shows you suggested words to start with. To pick one of them, just click on it, and it'll
 appear on the tiles. You can always enter your own word by just typing (if it doesn't work, click somewhere on the
-windows' background). Next step is to enter the word into Wordle and highlight the letters with yellow or green,
+buttons background). Next step is to enter the word into Wordle and highlight the letters with yellow or green,
 depending on your Wordle's output. To mark a letter as yellow, left-click it, to mark a letter as green, right-click it.
 Clicking it again will revert the color back to gray. When you entered the result, click "Confirm", and wait. After
 several seconds the "Suggested words" list should be populated with new words, and the Matching words counter should
 appear. You can repeat the process until you beat the game, and when you do, just press "Reset" to start again. If
 you're playing hello wordl instead, you can change the word length by moving the Word Length slider, all lengths from 4
-to 11 are supported.
+to 11 are supported. You can choose the dictionary you want to use by selecting it from the dropdown list under "
+Dictionary".  
+There is a settings and a help page, available settings are: default dictionary to load on startup and dark mode, turned
+on by default.
 
 ### The Console Version
 
