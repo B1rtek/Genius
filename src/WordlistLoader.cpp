@@ -1,4 +1,5 @@
 #include <fstream>
+#include <sys/stat.h>
 #include "WordlistLoader.h"
 #include "Genius.h"
 
@@ -11,6 +12,10 @@ WordlistLoader::WordlistLoader() = default;
  * @return List of paths to all files in the dictionaries directory
  */
 std::vector<std::string> WordlistLoader::listFilesInDirectory(std::string path) {
+    struct stat info{};
+    if(stat("dictionaries", &info) != 0) {
+        mkdir("dictionaries");
+    }
 #ifdef _WIN32
     std::string command = "dir " + path + "/A-D /B > temp.txt";
 #elif linux
