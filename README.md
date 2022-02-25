@@ -63,3 +63,6 @@ $ make
 using the GNU compiler. Just remember that if you're on Windows, you need to specify the path to your Qt5 installation
 in the CMakeLists.txt (the line is marked with a comment). You can build just one of the targets by specifying it (for
 example `--target Genius-cli`)
+
+This project uses the [JSON for Modern C++](https://github.com/nlohmann/json) library
+by [Niels Lohmann](https://github.com/nlohmann)
