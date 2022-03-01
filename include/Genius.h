@@ -23,6 +23,8 @@ class Genius {
     std::vector<std::string> matching, dataWords;
     int currentDataWordIndex;
     std::string dictionaryPath;
+    std::vector<std::pair<std::string, std::string>> history;
+    int historyPointer;
 
     void loadWords(const std::string& path);
 
@@ -70,8 +72,6 @@ public:
     void reset();
 
     void saveWordCache();
-
-    bool checkIfWordsFileExists();
 
     void start(std::string path);
 
