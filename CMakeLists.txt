@@ -12,7 +12,8 @@ find_package(Qt5Widgets REQUIRED)
 
 set(GUI_SOURCE_FILES src/Genius.cpp include/Genius.h src/WordleButton.cpp include/WordleButton.h src/WordleWord.cpp include/WordleWord.h src/GeniusWindow.cpp include/GeniusWindow.h src/WordlistLoader.cpp include/WordlistLoader.h src/Settings.cpp include/Settings.h)
 
-add_executable(Genius-cli mainOld.cpp)
+add_executable(Genius-cli main-cli.cpp src/Genius.cpp include/Genius.h)
+target_include_directories(Genius-cli PRIVATE include)
 if (WIN32)
     set(EXECUTABLE_NAME "Genius-win32")
     add_executable(${EXECUTABLE_NAME} WIN32 main.cpp ${GUI_SOURCE_FILES})
