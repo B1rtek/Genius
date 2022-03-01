@@ -189,7 +189,8 @@ void GeniusWindow::loadNewDictionary(const QString& path) {
         return;
     }
     this->genius.start(path.toStdString());
-    this->resetButton();
+//    this->resetButton();
+    this->confirmButton();
 }
 
 /**

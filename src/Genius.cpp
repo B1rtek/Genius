@@ -415,6 +415,8 @@ void Genius::enterWord(std::string enteredWord, std::string result) {
 void Genius::analyze() {
     while (historyPointer < this->history.size()) {
         this->currentDataWordIndex = 0;
+        this->userWord = this->history[historyPointer].first;
+        this->userResult = this->history[historyPointer].second;
         std::string conf = getConfirmed(this->userResult);
         this->confirmed = this->mergeConfirmed(this->confirmed, conf);
         addNotHere(this->notHere, this->userResult);
@@ -520,8 +522,10 @@ void Genius::saveWordCache() {
 void Genius::start(const std::string &path) {
     this->saveWordCache();
     this->dictionaryPath = path;
-    this->reset();
+    //this->reset();
     loadWords(path);
+    this->historyPointer = 0;
+    this->analyze();
 }
 
 /**
