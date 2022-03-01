@@ -38,7 +38,7 @@ class GeniusWindow : public QMainWindow {
 
     void setDarkMode(bool darkMode);
 
-    void setDefaultDictionary(QString defaultDict);
+    void setDefaultDictionary(const QString& defaultDict);
 
 public:
     explicit GeniusWindow(QWidget *parent = nullptr);
@@ -47,7 +47,7 @@ public:
 
     void closeEvent(QCloseEvent *event) override;
 
-    void loadNewDictionary(QString path);
+    void loadNewDictionary(const QString& path);
 };
 
 #endif //GENIUS_GENIUSWINDOW_H

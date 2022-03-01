@@ -11,7 +11,7 @@ WordlistLoader::WordlistLoader() = default;
 /**
  * @return List of paths to all files in the dictionaries directory
  */
-std::vector<std::string> WordlistLoader::listFilesInDirectory(std::string path) {
+std::vector<std::string> WordlistLoader::listFilesInDirectory(const std::string& path) {
     struct stat info{};
     if(stat("dictionaries", &info) != 0) {
 #ifdef _WIN32
@@ -46,7 +46,7 @@ std::vector<std::string> WordlistLoader::listFilesInDirectory(std::string path) 
  */
 std::string WordlistLoader::getExtension(std::string path) {
     std::string extension;
-    int i = path.size() - 1;
+    int i = path.size() - 1; // NOLINT(cppcoreguidelines-narrowing-conversions)
     while (i >= 0 && path[i] != '.') {
         extension += path[i];
         i--;

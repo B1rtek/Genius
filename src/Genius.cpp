@@ -507,7 +507,7 @@ void Genius::saveWordCache() {
  *
  * Contains a part of constructor that segfaults if no words.txt is present
  */
-void Genius::start(std::string path) {
+void Genius::start(const std::string& path) {
     this->saveWordCache();
     this->dictionaryPath = path;
     this->reset();

@@ -2,12 +2,14 @@
 #include "Genius.h"
 #include <json.hpp>
 #include <fstream>
+#include <utility>
 
 /**
  * @brief Initializes the Settings by setting the settings file path
  */
 Settings::Settings() {
     this->path = "settings.json";
+    this->darkMode = true;
 }
 
 /**
@@ -57,8 +59,8 @@ void Settings::saveSettings() {
  * @brief Sets the default dictionary setting
  * @param path new default dictionary path
  */
-void Settings::setDefaultDictionary(std::string path) {
-    this->defaultDict = path;
+void Settings::setDefaultDictionary(std::string newPath) {
+    this->defaultDict = std::move(newPath);
 }
 
 /**
@@ -79,6 +81,6 @@ void Settings::setDarkMode(bool yes) {
 /**
  * @return The current state of the dark mode setting
  */
-bool Settings::getDarkMode() {
+bool Settings::getDarkMode() const {
     return this->darkMode;
 }

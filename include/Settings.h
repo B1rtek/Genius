@@ -25,7 +25,7 @@ public:
 
     void setDarkMode(bool yes);
 
-    bool getDarkMode();
+    bool getDarkMode() const;
 };
 
 

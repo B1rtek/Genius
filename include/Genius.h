@@ -73,7 +73,7 @@ public:
 
     void saveWordCache();
 
-    void start(std::string path);
+    void start(const std::string& path);
 
     std::string getCurrentDictionary();
 };

@@ -32,7 +32,7 @@ void WordleButton::setButtonColor() {
 /**
  * @brief Ensures that the button is (almost) always square
  * @param width Qt5 stuff idk
- * @return Qt5 stuff idk, this function is overriden
+ * @return Qt5 stuff idk, this function is overridden
  */
 int WordleButton::heightForWidth(int width) const {
     return width;

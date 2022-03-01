@@ -112,8 +112,8 @@ void GeniusWindow::showMatchingWords() {
  * @brief Shows the help dialog
  */
 void GeniusWindow::showHelp() {
-    Ui_GeniusHelp helpUI;
-    QDialog *helpDialog = new QDialog();
+    Ui_GeniusHelp helpUI{};
+    auto *helpDialog = new QDialog();
     helpUI.setupUi(helpDialog);
     connect(helpUI.buttonOk, &QPushButton::clicked, helpDialog, &QDialog::close);
     helpDialog->show();
@@ -123,8 +123,8 @@ void GeniusWindow::showHelp() {
  * @brief Shows the settings dialog
  */
 void GeniusWindow::showSettings() {
-    Ui_GeniusSettings settingsUI;
-    QDialog *settingsDialog = new QDialog();
+    Ui_GeniusSettings settingsUI{};
+    auto *settingsDialog = new QDialog();
     settingsUI.setupUi(settingsDialog);
     settingsUI.checkBoxDarkMode->setChecked(this->settings.getDarkMode());
     for (auto &dict: wordlistLoader.getDictionariesList()) {
@@ -182,9 +182,9 @@ void GeniusWindow::closeEvent(QCloseEvent *event) {
 }
 
 /**
- * @brief Loads the specified dicionary
+ * @brief Loads the specified dictionary
  */
-void GeniusWindow::loadNewDictionary(QString path) {
+void GeniusWindow::loadNewDictionary(const QString& path) {
     if (path.toStdString() == this->genius.getCurrentDictionary()) {
         return;
     }
@@ -253,6 +253,6 @@ void GeniusWindow::setDarkMode(bool darkMode) {
 /**
  * @brief Sets the new default dictionary
  */
-void GeniusWindow::setDefaultDictionary(QString defaultDict) {
+void GeniusWindow::setDefaultDictionary(const QString& defaultDict) {
     this->settings.setDefaultDictionary(defaultDict.toStdString());
 }
