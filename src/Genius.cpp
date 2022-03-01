@@ -169,7 +169,7 @@ void Genius::findStarters() {
     if (this->bestStarters[wordSize - 4].empty()) {
         sort(this->dictionary[wordSize - 4].begin(), this->dictionary[wordSize - 4].end(), compare);
         int k = 0;
-        if(this->dictionary[wordSize - 4].empty()) {
+        if (this->dictionary[wordSize - 4].empty()) {
             return;
         }
         int minScore = calculateScore(dictionary[wordSize - 4][0]);
@@ -400,6 +400,11 @@ std::vector<std::string> Genius::getStarters() {
  * @param result result of entering that word into Wordle
  */
 void Genius::enterWord(std::string enteredWord, std::string result) {
+    if(this->historyPointer >= this->history.size()) {
+        this->history.emplace_back(enteredWord, result);
+    } else {
+        this->history.back() = std::make_pair(enteredWord, result);
+    }
     this->userWord = std::move(enteredWord);
     this->userResult = std::move(result);
 }
@@ -408,16 +413,19 @@ void Genius::enterWord(std::string enteredWord, std::string result) {
  * @brief Analyzes the entered word
  */
 void Genius::analyze() {
-    this->currentDataWordIndex = 0;
-    std::string conf = getConfirmed(this->userResult);
-    this->confirmed = this->mergeConfirmed(this->confirmed, conf);
-    addNotHere(this->notHere, this->userResult);
-    this->addInWord(this->inWord, this->userResult);
-    this->addWrong(this->wrong, this->userResult, this->userWord);
-    this->fixWrong(this->wrong, this->inWord);
-    this->matching = this->findMatching(this->dictionary[this->wordSize - 4], this->confirmed, this->inWord,
-                                        this->wrong, this->notHere);
-    this->dataWords = this->findDataWords(this->dictionary[this->wordSize - 4], this->inWord, this->wrong);
+    while (historyPointer < this->history.size()) {
+        this->currentDataWordIndex = 0;
+        std::string conf = getConfirmed(this->userResult);
+        this->confirmed = this->mergeConfirmed(this->confirmed, conf);
+        addNotHere(this->notHere, this->userResult);
+        this->addInWord(this->inWord, this->userResult);
+        this->addWrong(this->wrong, this->userResult, this->userWord);
+        this->fixWrong(this->wrong, this->inWord);
+        this->matching = this->findMatching(this->dictionary[this->wordSize - 4], this->confirmed, this->inWord,
+                                            this->wrong, this->notHere);
+        this->dataWords = this->findDataWords(this->dictionary[this->wordSize - 4], this->inWord, this->wrong);
+        this->historyPointer++;
+    }
 }
 
 /**
@@ -474,6 +482,8 @@ void Genius::reset() {
         confirmed += ' ';
     }
     this->currentDataWordIndex = 0;
+    this->historyPointer = 0;
+    this->history.clear();
 }
 
 /**
@@ -481,13 +491,13 @@ void Genius::reset() {
  */
 void Genius::saveWordCache() {
     std::string cachePath;
-    if(dictionaryPath.empty()) {
+    if (dictionaryPath.empty()) {
         return;
     }
-    if(this->dictionaryPath == "default") {
+    if (this->dictionaryPath == "default") {
         cachePath = "wordCache.gen";
     } else {
-        cachePath = "dictionaries/"+this->dictionaryPath+".cache";
+        cachePath = "dictionaries/" + this->dictionaryPath + ".cache";
     }
     std::fstream wordCache;
     wordCache.open(cachePath.c_str(), std::ios::out);
@@ -507,7 +517,7 @@ void Genius::saveWordCache() {
  *
  * Contains a part of constructor that segfaults if no words.txt is present
  */
-void Genius::start(const std::string& path) {
+void Genius::start(const std::string &path) {
     this->saveWordCache();
     this->dictionaryPath = path;
     this->reset();
