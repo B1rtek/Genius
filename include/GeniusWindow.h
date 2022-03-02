@@ -40,6 +40,8 @@ class GeniusWindow : public QMainWindow {
 
     void setDefaultDictionary(const QString& defaultDict);
 
+    void analyze(bool newWordEntered);
+
 public:
     explicit GeniusWindow(QWidget *parent = nullptr);
 

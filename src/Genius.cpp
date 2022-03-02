@@ -464,9 +464,12 @@ std::vector<std::string> Genius::getDataWords() {
  * @brief Sets the word size
  */
 void Genius::setWordSize(int newWordSize) {
+    if(newWordSize == this->wordSize) {
+        return;
+    }
     this->wordSize = newWordSize;
     this->reset();
-    this->findStarters();
+    this->getStarters();
 }
 
 /**
@@ -478,6 +481,7 @@ void Genius::reset() {
     this->notHere.clear();
     this->confirmed.clear();
     this->dataWords.clear();
+    this->matching.clear();
     notHere.reserve(wordSize);
     for (int i = 0; i < this->wordSize; i++) {
         notHere.emplace_back();
@@ -486,6 +490,7 @@ void Genius::reset() {
     this->currentDataWordIndex = 0;
     this->historyPointer = 0;
     this->history.clear();
+    this->findStarters();
 }
 
 /**
@@ -515,11 +520,10 @@ void Genius::saveWordCache() {
 }
 
 /**
- * @brief Starts Genius
- *
- * Contains a part of constructor that segfaults if no words.txt is present
+ * @brief Handles all operations that need to be done while switching to a new dictionary
+ * @param newDictionary new dictionary path
  */
-void Genius::start(const std::string &path) {
+void Genius::changeDictionary(const std::string &path) {
     this->saveWordCache();
     this->dictionaryPath = path;
     //this->reset();
@@ -533,4 +537,11 @@ void Genius::start(const std::string &path) {
  */
 std::string Genius::getCurrentDictionary() {
     return this->dictionaryPath;
+}
+
+/**
+ * @return the history vector size
+ */
+int Genius::getHistorySize() {
+    return this->history.size();
 }

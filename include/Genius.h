@@ -73,9 +73,11 @@ public:
 
     void saveWordCache();
 
-    void start(const std::string& path);
+    void changeDictionary(const std::string& path);
 
     std::string getCurrentDictionary();
+
+    int getHistorySize();
 };
 
 #endif //GENIUS_GENIUS_H

@@ -30,7 +30,7 @@ GeniusWindow::GeniusWindow(QWidget *parent) {
     this->setDarkMode(this->settings.getDarkMode());
     this->ui.comboBoxWordlist->setCurrentIndex(
             this->ui.comboBoxWordlist->findText(QString(this->settings.getDefaultDictionary().c_str())));
-    this->genius.start(this->settings.getDefaultDictionary());
+    this->genius.changeDictionary(this->settings.getDefaultDictionary());
     this->resetButton();
     this->linkButtons();
 }
@@ -65,14 +65,23 @@ void GeniusWindow::wordLengthChange() {
  * @brief Starts the analysis of the word
  */
 void GeniusWindow::confirmButton() {
-    std::pair<std::string, std::string> userInput = this->wordDisplay.getUserInput();
-    if (userInput.first.empty() || userInput.second.empty()) {
-        return;
+    this->analyze(true);
+}
+
+/**
+ * @brief Starts word analysis
+ */
+void GeniusWindow::analyze(bool newWordEntered) {
+    if(newWordEntered) {
+        std::pair<std::string, std::string> userInput = this->wordDisplay.getUserInput();
+        if (userInput.first.empty() || userInput.second.empty()) {
+            return;
+        }
+        this->genius.enterWord(userInput.first, userInput.second);
     }
+    this->genius.analyze();
     this->ui.listMatching->clear();
     this->ui.listSuggested->clear();
-    this->genius.enterWord(userInput.first, userInput.second);
-    this->genius.analyze();
     int matchingAmount = this->genius.getMatchingAmount();
     std::string newMatchingText = "Matching words: " + std::to_string(matchingAmount);
     this->ui.labelMatchingWords->setText(newMatchingText.c_str());
@@ -188,9 +197,12 @@ void GeniusWindow::loadNewDictionary(const QString& path) {
     if (path.toStdString() == this->genius.getCurrentDictionary()) {
         return;
     }
-    this->genius.start(path.toStdString());
-//    this->resetButton();
-    this->confirmButton();
+    this->genius.changeDictionary(path.toStdString());
+    if(this->genius.getHistorySize() == 0) {
+        this->resetButton();
+    } else {
+        this->analyze(false);
+    }
 }
 
 /**
