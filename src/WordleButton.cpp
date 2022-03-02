@@ -17,15 +17,6 @@ WordleButton::WordleButton(QWidget *parent) : QPushButton(parent) { // NOLINT(cp
  * @brief Sets the actual color of the button to the current one
  */
 void WordleButton::setButtonColor() {
-//    std::map<ButtonColor, QColor> colorMap = {
-//            {ButtonColor::GRAY,   QColor(120, 124, 126, 255)},
-//            {ButtonColor::GREEN,  QColor(106, 170, 100, 255)},
-//            {ButtonColor::YELLOW, QColor(201, 180, 88, 255)}
-//    };
-//    QPalette pal = this->palette();
-//    pal.setColor(QPalette::Button, colorMap[this->color]);
-//    this->setAutoFillBackground(true);
-//    this->setPalette(pal);
     std::map<ButtonColor, std::string> colorMap = {
             {ButtonColor::GRAY,   "#787c7e"},
             {ButtonColor::GREEN,  "#6aaa64"},

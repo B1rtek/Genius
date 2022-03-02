@@ -526,7 +526,6 @@ void Genius::saveWordCache() {
 void Genius::changeDictionary(const std::string &path) {
     this->saveWordCache();
     this->dictionaryPath = path;
-    //this->reset();
     loadWords(path);
     this->historyPointer = 0;
     this->analyze();
