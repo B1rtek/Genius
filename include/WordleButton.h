@@ -12,6 +12,7 @@ enum ButtonColor {
 class WordleButton : public QPushButton {
     char letter;
     ButtonColor color;
+    std::string baseStyleSheet;
 
     void setButtonColor();
 
