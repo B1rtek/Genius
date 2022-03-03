@@ -21,12 +21,14 @@ class Genius {
     std::vector<std::set<char>> notHere;
     std::string userWord, userResult, confirmed;
     std::vector<std::string> matching, dataWords;
+    std::vector<std::vector<std::string>> dataWordsVector;
+    std::pair<int, int> dataWordsVectorPointer;
     int currentDataWordIndex;
     std::string dictionaryPath;
     std::vector<std::pair<std::string, std::string>> history;
     int historyPointer;
 
-    void loadWords(const std::string& path);
+    void loadWords(const std::string &path);
 
     static std::string purify(std::string word);
 
@@ -42,15 +44,15 @@ class Genius {
 
     void addWrong(std::set<char> &wrong, std::string input, std::string yourWord) const;
 
-    static void fixWrong(std::set<char> &wrong, const std::set<char>& inWord);
+    static void fixWrong(std::set<char> &wrong, const std::set<char> &inWord);
 
     [[nodiscard]] std::vector<std::string>
-    findMatching(std::vector<std::string> allWords, std::string currentConfirmed, const std::set<char>& currentInWord,
-                 const std::set<char>& currentWrong,
+    findMatching(std::vector<std::string> allWords, std::string currentConfirmed, const std::set<char> &currentInWord,
+                 const std::set<char> &currentWrong,
                  std::vector<std::set<char>> currentNotHere) const;
 
-    [[nodiscard]] std::vector<std::string>
-    findDataWords(const std::vector<std::string>& allWords, const std::set<char>& currentInWord, const std::set<char>& currentWrong) const;
+    void findDataWords(const std::vector<std::string> &allWords, const std::set<char> &currentInWord,
+                       const std::set<char> &currentWrong);
 
 public:
     Genius();
@@ -73,7 +75,7 @@ public:
 
     void saveWordCache();
 
-    void changeDictionary(const std::string& path);
+    void changeDictionary(const std::string &path);
 
     std::string getCurrentDictionary();
 
