@@ -373,15 +373,18 @@ void Genius::findDataWords(const std::vector<std::string> &allWords, const std::
  * @return a list containing 10 good starting words
  */
 std::vector<std::string> Genius::getStarters() {
-    std::mt19937 gen(time(nullptr)); // NOLINT(cert-msc51-cpp) it really doesn't matter
-    std::shuffle(this->bestStarters[this->wordSize - 4].begin(), this->bestStarters[this->wordSize - 4].end(), gen);
+    if (this->startersPointer == 0) {
+        std::mt19937 gen(time(nullptr)); // NOLINT(cert-msc51-cpp) it really doesn't matter
+        std::shuffle(this->bestStarters[this->wordSize - 4].begin(), this->bestStarters[this->wordSize - 4].end(), gen);
+    }
     std::vector<std::string> starters;
     int amount = this->bestStarters[this->wordSize -
                                     4].size(); // NOLINT(cppcoreguidelines-narrowing-conversions) doesn't matter
-    amount = std::min(amount, 10);
-    for (int i = 0; i < amount; i++) {
+    amount = std::min(amount, this->startersPointer + 10);
+    for (int i = this->startersPointer; i < amount; i++) {
         starters.push_back(bestStarters[this->wordSize - 4][i]);
     }
+    this->startersPointer = amount;
     return starters;
 }
 
@@ -417,7 +420,7 @@ void Genius::analyze() {
         this->matching = this->findMatching(this->matching, this->confirmed, this->inWord,
                                             this->wrong, this->notHere);
         this->historyPointer++;
-        if(historyPointer == this->history.size()) {
+        if (historyPointer == this->history.size()) {
             this->findDataWords(this->dictionary[this->wordSize - 4], this->inWord, this->wrong);
         }
     }
@@ -443,6 +446,9 @@ std::vector<std::string> Genius::getMatching() {
  * @return vector with 10 data words
  */
 std::vector<std::string> Genius::getDataWords() {
+    if (this->getHistorySize() == 0) {
+        return this->getStarters();
+    }
     std::vector<std::string> dataWordsBatch;
     if (this->dataWordsVectorPointer.second == -1) {
         this->dataWordsVectorPointer.second++;
@@ -458,7 +464,8 @@ std::vector<std::string> Genius::getDataWords() {
                  this->dataWordsVector[this->dataWordsVectorPointer.second].end());
             this->dataWordsVectorPointer.first = 0;
         } else {
-            dataWordsBatch.push_back(this->dataWordsVector[this->dataWordsVectorPointer.second][this->dataWordsVectorPointer.first]);
+            dataWordsBatch.push_back(
+                    this->dataWordsVector[this->dataWordsVectorPointer.second][this->dataWordsVectorPointer.first]);
             this->dataWordsVectorPointer.first++;
         }
     }
@@ -496,6 +503,7 @@ void Genius::reset() {
     }
     this->currentDataWordIndex = 0;
     this->historyPointer = 0;
+    this->startersPointer = 0;
     this->history.clear();
     this->findStarters();
 }

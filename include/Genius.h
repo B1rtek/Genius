@@ -16,6 +16,7 @@ bool isNumeric(std::string &possiblyNumber);
 class Genius {
     std::vector<std::string> dictionary[8];
     std::vector<std::string> bestStarters[8];
+    int startersPointer;
     int wordSize;
     std::set<char> wrong, inWord;
     std::vector<std::set<char>> notHere;
