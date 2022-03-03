@@ -539,6 +539,7 @@ void Genius::changeDictionary(const std::string &path) {
     this->saveWordCache();
     this->dictionaryPath = path;
     loadWords(path);
+    this->matching = this->dictionary[wordSize - 4];
     this->historyPointer = 0;
     this->analyze();
 }
