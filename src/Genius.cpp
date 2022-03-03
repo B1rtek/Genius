@@ -416,8 +416,10 @@ void Genius::analyze() {
         this->fixWrong(this->wrong, this->inWord);
         this->matching = this->findMatching(this->matching, this->confirmed, this->inWord,
                                             this->wrong, this->notHere);
-        this->findDataWords(this->dictionary[this->wordSize - 4], this->inWord, this->wrong);
         this->historyPointer++;
+        if(historyPointer == this->history.size()) {
+            this->findDataWords(this->dictionary[this->wordSize - 4], this->inWord, this->wrong);
+        }
     }
 }
 
@@ -442,13 +444,6 @@ std::vector<std::string> Genius::getMatching() {
  */
 std::vector<std::string> Genius::getDataWords() {
     std::vector<std::string> dataWordsBatch;
-//    int batchPointer = this->dataWords.size(); // NOLINT(cppcoreguidelines-narrowing-conversions) doesn't matter
-//    batchPointer = std::min(batchPointer, currentDataWordIndex + 10);
-//    for (int i = currentDataWordIndex; i < batchPointer; i++) {
-//        dataWordsBatch.push_back(this->dataWords[i]);
-//    }
-//    currentDataWordIndex = batchPointer;
-//    return dataWordsBatch;
     if (this->dataWordsVectorPointer.second == -1) {
         this->dataWordsVectorPointer.second++;
         sort(this->dataWordsVector[0].begin(), this->dataWordsVector[0].end());
