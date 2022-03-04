@@ -15,7 +15,8 @@ console, `Genius-cli`.
 To use Genius, you'll need a word list. The better the word list you choose, the better will the Genius work. You can
 use [this one](https://github.com/dwyl/english-words/blob/master/words_alpha.txt) for example, but it contains a lot of
 garbage words like 'aam' or 'abama' and many more that are not accepted, I used it because it's the longest reasonable
-one. To use it, just put it in the `dictionaries` folder or name it `words.txt` and place in the same directory as Genius.
+one. To use it, just put it in the `dictionaries` folder or name it `words.txt` and place in the same directory as
+Genius.
 
 ### The GUI Version
 
@@ -33,7 +34,8 @@ several seconds the "Suggested words" list should be populated with new words, a
 appear. You can repeat the process until you beat the game, and when you do, just press "Reset" to start again. If
 you're playing hello wordl instead, you can change the word length by moving the Word Length slider, all lengths from 4
 to 11 are supported. You can choose the dictionary you want to use by selecting it from the dropdown list under "
-Dictionary".  
+Dictionary". You can even switch between dictionaries on the fly to see if maybe the solution is clearly visible in any
+of them!  
 There is a settings and a help page, available settings are: default dictionary to load on startup and dark mode, turned
 on by default.
 
