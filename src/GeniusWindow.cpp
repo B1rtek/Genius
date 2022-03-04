@@ -88,6 +88,7 @@ void GeniusWindow::analyze(bool newWordEntered) {
     if (matchingAmount <= 10) {
         this->showMatchingWords();
     }
+    this->ui.labelSuggestedWords->setText("Suggested words");
     this->showSuggestedWords();
 }
 
@@ -104,6 +105,7 @@ void GeniusWindow::resetButton() {
         this->ui.listSuggested->addItem(item.c_str());
     }
     this->ui.labelMatchingWords->setText("Matching words");
+    this->ui.labelSuggestedWords->setText("Starter words");
 }
 
 /**
