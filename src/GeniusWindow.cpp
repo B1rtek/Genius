@@ -111,6 +111,9 @@ void GeniusWindow::resetButton() {
  */
 void GeniusWindow::showMatchingWords() {
     this->ui.listMatching->clear();
+    if(this->genius.getHistorySize() == 0) {
+        return;
+    }
     std::vector<std::string> matching = this->genius.getMatching();
     for (auto &item: matching) {
         this->ui.listMatching->addItem(item.c_str());
