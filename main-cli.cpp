@@ -25,6 +25,7 @@ int main(int argc, char **argv) {
     }
     Genius genius = Genius();
     genius.changeDictionary("default");
+    genius.reset();
     genius.setWordSize(wordSize);
     vector<string> suggestedStartWords = genius.getStarters();
     printVectorContents(suggestedStartWords, "Suggested start words: ");

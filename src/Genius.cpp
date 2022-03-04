@@ -452,7 +452,7 @@ std::vector<std::string> Genius::getDataWords() {
     std::vector<std::string> dataWordsBatch;
     if (this->dataWordsVectorPointer.second == -1) {
         this->dataWordsVectorPointer.second++;
-        sort(this->dataWordsVector[0].begin(), this->dataWordsVector[0].end());
+        sort(this->dataWordsVector[0].begin(), this->dataWordsVector[0].end(), compare);
     }
     while (dataWordsBatch.size() < 10) {
         if (this->dataWordsVectorPointer.first == this->dataWordsVector[this->dataWordsVectorPointer.second].size()) {
@@ -461,7 +461,7 @@ std::vector<std::string> Genius::getDataWords() {
                 break;
             }
             sort(this->dataWordsVector[this->dataWordsVectorPointer.second].begin(),
-                 this->dataWordsVector[this->dataWordsVectorPointer.second].end());
+                 this->dataWordsVector[this->dataWordsVectorPointer.second].end(), compare);
             this->dataWordsVectorPointer.first = 0;
         } else {
             dataWordsBatch.push_back(
