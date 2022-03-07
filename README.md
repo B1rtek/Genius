@@ -13,10 +13,9 @@ To launch Genius, execute the `Genius-(your system goes here)` executable, or if
 console, `Genius-cli`.
 
 To use Genius, you'll need a word list. The better the word list you choose, the better will the Genius work. You can
-use [this one](https://github.com/dwyl/english-words/blob/master/words_alpha.txt) for example, but it contains a lot of
-garbage words like 'aam' or 'abama' and many more that are not accepted, I used it because it's the longest reasonable
-one. To use it, just put it in the `dictionaries` folder or name it `words.txt` and place in the same directory as
-Genius.
+use [this one](https://raw.githubusercontent.com/Taking1n1/PyLex/master/resources/words2.txt) for example, it contains 
+probably everythin that Wordle and hellowordl is able to come up with. To use it, just put it in the `dictionaries` folder
+or name it `words.txt` and place in the same directory as Genius.
 
 ### The GUI Version
 
