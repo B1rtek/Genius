@@ -26,6 +26,8 @@ public:
     void reset();
 
     void enterWord(std::string newWord);
+
+    void setInput(std::pair<std::string, std::string> input);
 };
 
 

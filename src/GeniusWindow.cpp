@@ -50,6 +50,7 @@ void GeniusWindow::linkButtons() const {
     connect(this->ui.comboBoxWordlist, &QComboBox::currentTextChanged, this, &GeniusWindow::loadNewDictionary);
     connect(this->ui.actionSettings, &QAction::triggered, this, &GeniusWindow::showSettings);
     connect(this->ui.actionHelp, &QAction::triggered, this, &GeniusWindow::showHelp);
+    connect(this->ui.buttonUndo, &QPushButton::clicked, this, &GeniusWindow::undo);
 }
 
 /**
@@ -273,4 +274,17 @@ void GeniusWindow::setDarkMode(bool darkMode) {
  */
 void GeniusWindow::setDefaultDictionary(const QString& defaultDict) {
     this->settings.setDefaultDictionary(defaultDict.toStdString());
+}
+
+/**
+ * @brief Performs the undo action
+ */
+void GeniusWindow::undo() {
+    if(this->genius.getHistorySize() == 0) {
+        return;
+    }
+    this->genius.undo();
+    this->analyze(false);
+    std::pair<std::string, std::string> lastInput = this->genius.getLastEntered();
+    this->wordDisplay.setInput(lastInput);
 }

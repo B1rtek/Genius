@@ -378,8 +378,8 @@ std::vector<std::string> Genius::getStarters() {
         std::shuffle(this->bestStarters[this->wordSize - 4].begin(), this->bestStarters[this->wordSize - 4].end(), gen);
     }
     std::vector<std::string> starters;
-    int amount = this->bestStarters[this->wordSize -
-                                    4].size(); // NOLINT(cppcoreguidelines-narrowing-conversions) doesn't matter
+    int amount = this->bestStarters[this->wordSize - // NOLINT(cppcoreguidelines-narrowing-conversions) doesn't matter
+                                    4].size(); // NOLINT(cppcoreguidelines-narrowing-conversions) believe me
     amount = std::min(amount, this->startersPointer + 10);
     for (int i = this->startersPointer; i < amount; i++) {
         starters.push_back(bestStarters[this->wordSize - 4][i]);
@@ -486,8 +486,9 @@ void Genius::setWordSize(int newWordSize) {
 
 /**
  * @brief Resets the Genius
+ * @param undoVersion performs actions relevant to the undo action
  */
-void Genius::reset() {
+void Genius::reset(bool undoVersion) {
     this->wrong.clear();
     this->inWord.clear();
     this->notHere.clear();
@@ -503,9 +504,11 @@ void Genius::reset() {
     }
     this->currentDataWordIndex = 0;
     this->historyPointer = 0;
-    this->startersPointer = 0;
-    this->history.clear();
-    this->findStarters();
+    if(!undoVersion) {
+        this->startersPointer = 0;
+        this->history.clear();
+        this->findStarters();
+    }
 }
 
 /**
@@ -559,4 +562,32 @@ std::string Genius::getCurrentDictionary() {
  */
 int Genius::getHistorySize() {
     return this->history.size();
+}
+
+/**
+* @brief Undos the last entered word
+*/
+void Genius::undo() {
+    if (!this->history.empty()) {
+        this->history.pop_back();
+        this->matching = this->dictionary[wordSize - 4];
+        this->historyPointer = 0;
+    }
+    this->reset(true);
+}
+
+/**
+ * @return Returns the latest input stored in the history
+ */
+std::pair<std::string, std::string> Genius::getLastEntered() {
+    if (this->history.empty()) {
+        std::pair<std::string, std::string> noneInput = {"", ""};
+        for (int i = 0; i < this->wordSize; i++) {
+            noneInput.first += ' ';
+            noneInput.second += '-';
+        }
+        return noneInput;
+    } else {
+        return this->history.back();
+    }
 }

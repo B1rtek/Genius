@@ -39,7 +39,7 @@ void WordleWord::changeLength(int newLength) {
  * @brief Removes the letter from the last WordleButton
  */
 void WordleWord::backspace() {
-    if(wordPointer == 0) {
+    if (wordPointer == 0) {
         return;
     }
     wordPointer = std::max(0, wordPointer - 1);
@@ -51,7 +51,7 @@ void WordleWord::backspace() {
  * @param letterEnum Qt::Key enum of the pressed key
  */
 void WordleWord::addLetter(Qt::Key letterEnum) {
-    if(this->wordPointer == this->buttons.size()) {
+    if (this->wordPointer == this->buttons.size()) {
         return;
     }
     char letter = char(letterEnum - 0x41 + 97);
@@ -67,7 +67,7 @@ void WordleWord::addLetter(Qt::Key letterEnum) {
  */
 std::pair<std::string, std::string> WordleWord::getUserInput() {
     std::string input, result;
-    for (auto & button : this->buttons) {
+    for (auto &button: this->buttons) {
         char inputLetter = button->getLetter();
         char resultLetter = button->getResultLetter();
         if (inputLetter == ' ' || resultLetter == ' ') {
@@ -84,7 +84,7 @@ std::pair<std::string, std::string> WordleWord::getUserInput() {
  */
 void WordleWord::reset() {
     this->wordPointer = 0;
-    for(auto & button : this->buttons) {
+    for (auto &button: this->buttons) {
         button->reset();
     }
 }
@@ -95,8 +95,22 @@ void WordleWord::reset() {
  */
 void WordleWord::enterWord(std::string newWord) {
     this->wordPointer = this->buttons.size(); // NOLINT(cppcoreguidelines-narrowing-conversions)
-    for(int i=0; i<this->buttons.size(); i++) {
+    for (int i = 0; i < this->buttons.size(); i++) {
         this->buttons[i]->reset();
         this->buttons[i]->setLetter(newWord[i]);
     }
+}
+
+/**
+ * @brief Sets the given input on the buttons
+ */
+void WordleWord::setInput(std::pair<std::string, std::string> input) {
+    this->enterWord(input.first);
+    for (int i = 0; i < this->buttons.size(); i++) {
+        ButtonColor newColor =
+                input.second[i] == '-' ? ButtonColor::GRAY :
+                (input.second[i] == input.first[i] ? ButtonColor::YELLOW : ButtonColor::GREEN);
+        this->buttons[i]->setColor(newColor);
+    }
+    this->wordPointer = 0;
 }

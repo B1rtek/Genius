@@ -32,6 +32,8 @@ public:
     char getResultLetter();
 
     void reset();
+
+    void setColor(ButtonColor newColor);
 };
 
 #endif //GENIUS_WORDLEBUTTON_H

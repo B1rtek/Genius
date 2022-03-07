@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'genius.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.15.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -49,6 +49,8 @@ public:
     QSpacerItem *horizontalSpacer_2;
     QHBoxLayout *horizontalLayout_3;
     QPushButton *buttonConfirm;
+    QVBoxLayout *verticalLayout_6;
+    QPushButton *buttonUndo;
     QPushButton *buttonReset;
     QHBoxLayout *horizontalLayout_5;
     QVBoxLayout *verticalLayout;
@@ -82,7 +84,13 @@ public:
         actionHelp->setIcon(icon);
         actionSettings = new QAction(Genius);
         actionSettings->setObjectName(QString::fromUtf8("actionSettings"));
-        QIcon icon1(QIcon::fromTheme(QString::fromUtf8("settings")));
+        QIcon icon1;
+        iconThemeName = QString::fromUtf8("settings");
+        if (QIcon::hasThemeIcon(iconThemeName)) {
+            icon1 = QIcon::fromTheme(iconThemeName);
+        } else {
+            icon1.addFile(QString::fromUtf8("."), QSize(), QIcon::Normal, QIcon::Off);
+        }
         actionSettings->setIcon(icon1);
         centralwidget = new QWidget(Genius);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
@@ -164,10 +172,20 @@ public:
 
         horizontalLayout_3->addWidget(buttonConfirm);
 
+        verticalLayout_6 = new QVBoxLayout();
+        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        buttonUndo = new QPushButton(centralwidget);
+        buttonUndo->setObjectName(QString::fromUtf8("buttonUndo"));
+
+        verticalLayout_6->addWidget(buttonUndo);
+
         buttonReset = new QPushButton(centralwidget);
         buttonReset->setObjectName(QString::fromUtf8("buttonReset"));
 
-        horizontalLayout_3->addWidget(buttonReset);
+        verticalLayout_6->addWidget(buttonReset);
+
+
+        horizontalLayout_3->addLayout(verticalLayout_6);
 
 
         horizontalLayout_4->addLayout(horizontalLayout_3);
@@ -267,6 +285,7 @@ public:
         label->setText(QCoreApplication::translate("Genius", "Dictionary", nullptr));
         labelWordLength->setText(QCoreApplication::translate("Genius", "Word length", nullptr));
         buttonConfirm->setText(QCoreApplication::translate("Genius", "Confirm", nullptr));
+        buttonUndo->setText(QCoreApplication::translate("Genius", "Undo", nullptr));
         buttonReset->setText(QCoreApplication::translate("Genius", "Reset", nullptr));
         labelMatchingWords->setText(QCoreApplication::translate("Genius", "Matching words", nullptr));
         buttonMatching->setText(QCoreApplication::translate("Genius", "Show", nullptr));

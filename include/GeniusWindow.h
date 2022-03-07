@@ -42,6 +42,8 @@ class GeniusWindow : public QMainWindow {
 
     void analyze(bool newWordEntered);
 
+    void undo();
+
 public:
     explicit GeniusWindow(QWidget *parent = nullptr);
 

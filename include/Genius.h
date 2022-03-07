@@ -72,7 +72,7 @@ public:
 
     void setWordSize(int newWordSize);
 
-    void reset();
+    void reset(bool undoVersion = false);
 
     void saveWordCache();
 
@@ -81,6 +81,10 @@ public:
     std::string getCurrentDictionary();
 
     int getHistorySize();
+
+    void undo();
+
+    std::pair<std::string, std::string> getLastEntered();
 };
 
 #endif //GENIUS_GENIUS_H

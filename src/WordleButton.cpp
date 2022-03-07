@@ -109,3 +109,11 @@ void WordleButton::reset() {
     this->color = ButtonColor::GRAY;
     this->setButtonColor();
 }
+
+/**
+* @brief Sets the new button color
+*/
+void WordleButton::setColor(ButtonColor newColor) {
+    this->color = newColor;
+    this->setButtonColor();
+}
