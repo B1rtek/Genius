@@ -32,7 +32,7 @@ class GeniusWindow : public QMainWindow {
 
     void enterWordFromList(QListWidgetItem *item);
 
-    void showHelp();
+    static void showHelp();
 
     void showSettings();
 

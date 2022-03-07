@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void printVectorContents(vector<string> content, string title = "", string footer = "") {
+void printVectorContents(const vector<string>& content, const string& title = "", const string& footer = "") {
     if (!title.empty()) cout << title << endl;
     for (auto &line: content) {
         cout << line << endl;

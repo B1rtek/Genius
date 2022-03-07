@@ -16,7 +16,7 @@ bool isNumeric(std::string &possiblyNumber);
 class Genius {
     std::vector<std::string> dictionary[8];
     std::vector<std::string> bestStarters[8];
-    int startersPointer;
+    int startersPointer{};
     int wordSize;
     std::set<char> wrong, inWord;
     std::vector<std::set<char>> notHere;
@@ -24,7 +24,6 @@ class Genius {
     std::vector<std::string> matching, dataWords;
     std::vector<std::vector<std::string>> dataWordsVector;
     std::pair<int, int> dataWordsVectorPointer;
-    int currentDataWordIndex;
     std::string dictionaryPath;
     std::vector<std::pair<std::string, std::string>> history;
     int historyPointer;

@@ -92,7 +92,6 @@ bool isNumeric(std::string &possiblyNumber) {
  */
 Genius::Genius() {
     this->wordSize = 5;
-    this->currentDataWordIndex = 0;
     this->dictionaryPath = "";
     this->historyPointer = 0;
 }
@@ -408,7 +407,6 @@ void Genius::enterWord(std::string enteredWord, std::string result) {
  */
 void Genius::analyze() {
     while (historyPointer < this->history.size()) {
-        this->currentDataWordIndex = 0;
         this->userWord = this->history[historyPointer].first;
         this->userResult = this->history[historyPointer].second;
         std::string conf = getConfirmed(this->userResult);
@@ -502,7 +500,6 @@ void Genius::reset(bool undoVersion) {
         notHere.emplace_back();
         confirmed += ' ';
     }
-    this->currentDataWordIndex = 0;
     this->historyPointer = 0;
     if(!undoVersion) {
         this->startersPointer = 0;
@@ -561,7 +558,7 @@ std::string Genius::getCurrentDictionary() {
  * @return the history vector size
  */
 int Genius::getHistorySize() {
-    return this->history.size();
+    return this->history.size(); // NOLINT(cppcoreguidelines-narrowing-conversions)
 }
 
 /**

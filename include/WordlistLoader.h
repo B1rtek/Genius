@@ -11,9 +11,9 @@
 class WordlistLoader {
     std::vector<std::string> wordlists;
 
-    std::vector<std::string> listFilesInDirectory(const std::string& path);
+    static std::vector<std::string> listFilesInDirectory(const std::string& path);
 
-    std::string getExtension(std::string path);
+    static std::string getExtension(std::string path);
 
 public:
     WordlistLoader();

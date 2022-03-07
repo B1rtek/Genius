@@ -27,7 +27,7 @@ public:
 
     void setLetter(char newLetter);
 
-    char getLetter() const;
+    [[nodiscard]] char getLetter() const;
 
     char getResultLetter();
 
