@@ -282,6 +282,9 @@ void GeniusWindow::setDefaultDictionary(const QString& defaultDict) {
 void GeniusWindow::undo() {
     if(this->genius.getHistorySize() == 0) {
         return;
+    } else if (this->genius.getHistorySize() == 1) {
+        this->resetButton();
+        return;
     }
     this->genius.undo();
     this->analyze(false);
