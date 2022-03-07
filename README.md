@@ -29,10 +29,11 @@ When you start Genius, it shows you suggested words to start with. To pick one o
 appear on the tiles. You can always enter your own word by just typing (if it doesn't work, click somewhere on the
 buttons background). Next step is to enter the word into Wordle and highlight the letters with yellow or green,
 depending on your Wordle's output. To mark a letter as yellow, left-click it, to mark a letter as green, right-click it.
-Clicking it again will revert the color back to gray. When you entered the result, click "Confirm", and wait. After
-several seconds the "Suggested words" list should be populated with new words, and the Matching words counter should
-appear. You can repeat the process until you beat the game, and when you do, just press "Reset" to start again. If
-you're playing hello wordl instead, you can change the word length by moving the Word Length slider, all lengths from 4
+Clicking it again will revert the color back to gray. When you entered the result, click "Confirm", and wait. Afterwards
+the "Suggested words" list should be populated with new words, and the Matching words counter should
+appear. You can repeat the process until you beat the game, and when you do, just press "Reset" to start again. If you made 
+a mistake, you can just press the undo button, you can undo the whole game with it.
+If you're playing hello wordl instead, you can change the word length by moving the Word Length slider, all lengths from 4
 to 11 are supported. You can choose the dictionary you want to use by selecting it from the dropdown list under "
 Dictionary". You can even switch between dictionaries on the fly to see if maybe the solution is clearly visible in any
 of them!  
